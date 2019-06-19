@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Battlerock;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,6 +18,12 @@ public class TilePlacer : MonoBehaviour
         SouthEast = 1 << 7,
     }
 
+    public TileMapScriptableObject tileMap;
+    public GridMap gridMap;
+
+    [SerializeField]
+    private GameObject m_currentTile;
+
     private static Directions CalculateTileFlags(bool east, bool west, bool north, bool south, bool northWest, bool northEast, bool southWest, bool southEast)
     {
         var directions = (east ? Directions.East : 0) | (west ? Directions.West : 0) | (north ? Directions.North : 0) | (south ? Directions.South : 0);
@@ -28,6 +35,40 @@ public class TilePlacer : MonoBehaviour
     }
 
     private void Start()
+    {
+        TestTileDirections();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            m_currentTile = tileMap.tiles[0];
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            m_currentTile = tileMap.tiles[1];
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            m_currentTile = tileMap.tiles[2];
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            m_currentTile = null;
+        }
+    }
+
+    private void PlaceTile()
+    {
+        Vector3Int cellPosition = gridMap.GridLayout.WorldToCell(transform.position);
+        transform.position = gridMap.GridLayout.CellToWorld(cellPosition);
+    }
+
+    private static void TestTileDirections()
     {
         bool east, west, north, south, northWest, northEast, southWest, southEast;
         var output = new HashSet<Directions>();
