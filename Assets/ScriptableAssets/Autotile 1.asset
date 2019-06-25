@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a3f6b3609905c8f4cbc9987d91ba567b, type: 3}
-  m_Name: New Terrain Tile
+  m_Name: Autotile 1
   m_EditorClassIdentifier: 
   m_tileObjects:
-  - {fileID: -927199367670048503, guid: 18ea36203f75c0d4194b09e8a7fc9296, type: 3}
-  - {fileID: -927199367670048503, guid: 4c9e42a2624a8cd4083c66f3aa881882, type: 3}
+  - {fileID: 100000, guid: a5875ebd4ff0f5b49b7cd09f39cf5d31, type: 3}
+  - {fileID: 100000, guid: 425fbf23355ffcf46b6e45c199126ad5, type: 3}
   - {fileID: -927199367670048503, guid: 342759bd06fc5d2438e53d118bf8995e, type: 3}
   - {fileID: -927199367670048503, guid: c74edadb846afe845b3a6fb08b0742a0, type: 3}
   - {fileID: -927199367670048503, guid: 03e8c6c62840e1f42a83b409729da6f3, type: 3}
@@ -27,4 +27,4 @@ MonoBehaviour:
   - {fileID: -927199367670048503, guid: fe60d6744d344b34d9bdc0c6bac1891f, type: 3}
   - {fileID: -927199367670048503, guid: 03e8c6c62840e1f42a83b409729da6f3, type: 3}
   - {fileID: -927199367670048503, guid: 9b68e90bce6d83840b4a6bc632a6abb6, type: 3}
-  - {fileID: -927199367670048503, guid: 36807e4eb55ba6942844e6721564e1d9, type: 3}
+  - {fileID: 100000, guid: 6bcc3d1efe4a6be45bf4bc1c1f1ea89d, type: 3}

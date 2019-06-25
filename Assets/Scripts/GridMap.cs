@@ -69,7 +69,7 @@ public class GridMap : MonoBehaviour
     private IEnumerator GenerateGridOverTime()
     {
         var gridSize = m_width * m_length;
-        var cellSize = m_tileMap.tiles[0].obj.GetComponent<Renderer>().bounds.size;
+        var cellSize = m_tileMap.tiles[0].gameObject.GetComponent<Renderer>().bounds.size;
 
         int index = 0;
 
@@ -124,7 +124,7 @@ public class GridMap : MonoBehaviour
 
             Debug.Log($"{nameof(tileIndex)}: {tileIndex}");
 
-            Instantiate(m_tileMap.tiles[tileIndex].obj, position, Quaternion.identity, this.transform);
+            Instantiate(m_tileMap.tiles[tileIndex].gameObject, position, Quaternion.identity, this.transform);
             yield return new WaitForSeconds(tileWaitTime);
             index++;
         }
