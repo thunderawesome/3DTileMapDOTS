@@ -13,18 +13,18 @@ MonoBehaviour:
   m_Name: Autotile 1
   m_EditorClassIdentifier: 
   m_tileObjects:
-  - {fileID: 100000, guid: a5875ebd4ff0f5b49b7cd09f39cf5d31, type: 3}
+  - {fileID: 100000, guid: 6bcc3d1efe4a6be45bf4bc1c1f1ea89d, type: 3}
   - {fileID: 100000, guid: 425fbf23355ffcf46b6e45c199126ad5, type: 3}
   - {fileID: -927199367670048503, guid: 342759bd06fc5d2438e53d118bf8995e, type: 3}
-  - {fileID: -927199367670048503, guid: c74edadb846afe845b3a6fb08b0742a0, type: 3}
-  - {fileID: -927199367670048503, guid: 03e8c6c62840e1f42a83b409729da6f3, type: 3}
+  - {fileID: 100000, guid: d840e299f6be1ad41835e9dd9fc22fd3, type: 3}
+  - {fileID: 100000, guid: eb609093a62d67b43b1fef5bc86b2fac, type: 3}
   - {fileID: -927199367670048503, guid: 64bdc8408fa9bdd40b23f128a7b2297b, type: 3}
   - {fileID: -927199367670048503, guid: abe7ea047063e704eac2be42c4fc2cb5, type: 3}
   - {fileID: -927199367670048503, guid: c8acbb75a0c8adf43a9fc99dd707dc8c, type: 3}
-  - {fileID: -927199367670048503, guid: cc9b505c225f3b54fbd133dfb8c959b2, type: 3}
+  - {fileID: 100000, guid: ad9c2a37d1a07f84b9fb2e820877d350, type: 3}
   - {fileID: -927199367670048503, guid: f1bf8908cd9b7f44bba228e338912917, type: 3}
   - {fileID: -927199367670048503, guid: daeb080834f73e644bc8174c9d8e852e, type: 3}
   - {fileID: -927199367670048503, guid: fe60d6744d344b34d9bdc0c6bac1891f, type: 3}
   - {fileID: -927199367670048503, guid: 03e8c6c62840e1f42a83b409729da6f3, type: 3}
   - {fileID: -927199367670048503, guid: 9b68e90bce6d83840b4a6bc632a6abb6, type: 3}
-  - {fileID: 100000, guid: 6bcc3d1efe4a6be45bf4bc1c1f1ea89d, type: 3}
+  - {fileID: 100000, guid: a5875ebd4ff0f5b49b7cd09f39cf5d31, type: 3}

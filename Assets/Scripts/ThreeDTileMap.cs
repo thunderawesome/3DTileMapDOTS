@@ -22,6 +22,12 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
     [SerializeField]
     private float tileWaitTime = .25f;
 
+    [SerializeField]
+    private bool m_flipXAxis = false;
+
+    [SerializeField]
+    private bool m_flipZAxis = false;
+
     #endregion
 
     #region Public Properties
@@ -56,18 +62,10 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
             int z = index % m_length;
             int x = Mathf.FloorToInt(index / m_length);
 
-            //var position = new Vector3Int((int)(x * cellSize.x), 0, (int)(z * cellSize.z));
             var location = new Vector3Int(x, z, 0);
 
             m_tiles.Add(location, new Tile(null, Matrix4x4.identity));
-            //ThreeDTileData threeDTileData = new ThreeDTileData();
-            //m_tileMap.GetTileData(location, this, ref threeDTileData);
-            //var go = Instantiate(threeDTileData.gameObject, position, Quaternion.identity, this.transform);
-
-            //m_tiles[location].gameObject = go;
-            //m_tiles[location].transform = threeDTileData.transform;
             index++;
-            //yield return new WaitForSeconds(tileWaitTime);
         }
 
         index = 0;
@@ -76,8 +74,20 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
             int z = index % m_length;
             int x = Mathf.FloorToInt(index / m_length);
 
-            var position = new Vector3Int((int)(-x * cellSize.x), 0, (int)(z * cellSize.z));
             var location = new Vector3Int(x, z, 0);
+
+            if (m_flipXAxis == true)
+            {
+                x *= -1;
+            }
+
+            if (m_flipZAxis == true)
+            {
+                z *= -1;
+            }
+
+            var position = new Vector3Int((int)(x * cellSize.x), 0, (int)(z * cellSize.z));
+
             ThreeDTileData threeDTileData = new ThreeDTileData();
             m_tileMap.GetTileData(location, this, ref threeDTileData);
             var go = Instantiate(threeDTileData.gameObject, position, threeDTileData.transform.rotation, this.transform);
