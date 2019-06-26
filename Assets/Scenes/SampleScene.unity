@@ -468,9 +468,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_tileMap: {fileID: 11400000, guid: 2d994ef6db4f0384690b8b6dd86c97c4, type: 2}
-  m_width: 12
+  m_width: 6
   m_length: 6
-  tileWaitTime: 0.01
+  tileWaitTime: 0.001
+  m_flipXAxis: 1
+  m_flipZAxis: 0
 --- !u!1001 &693619065
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -925,7 +927,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 15
+  orthographic size: 30
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -949,7 +951,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 10, z: -10}
+  m_LocalPosition: {x: 0, y: 10, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
