@@ -1,17 +1,27 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
+using Unity.Entities;
+using Unity.Mathematics;
+using Unity.Rendering;
+using Unity.Transforms;
 using UnityEngine;
 
 
 public class ThreeDTileMap : MonoBehaviour, ITileGrid
-{   
+{
     #region Private Variables
 
     [SerializeField]
     private TerrainTile m_tileMap = null;
 
     private GameObject m_mapHolder = null;
+
+    [SerializeField]
+    private Mesh m_mesh = null;
+
+    [SerializeField]
+    private Material m_material = null;
 
     private Dictionary<Vector3Int, Tile> m_tiles = null;
 
@@ -78,10 +88,20 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
         m_mapHolder = new GameObject("MapHolder");
 
         m_tiles = new Dictionary<Vector3Int, Tile>();
-        //StartCoroutine(GenerateGridOverTime());
-        
+
         var map = GenerateCellularAutomata(m_width, m_length, UnityEngine.Random.Range(0, 99999), m_fillPercent, m_edgesAreWalls);
         map = SmoothMooreCellularAutomata(map, m_edgesAreWalls, m_smoothCount);
+
+        EntityManager entityManager = World.Active.EntityManager;
+
+        EntityArchetype entityArchetype = entityManager.CreateArchetype(
+            typeof(Translation),
+            typeof(Rotation),
+            typeof(RenderMesh),
+            typeof(LocalToWorld));
+
+        NativeArray<Entity> entityArray = new NativeArray<Entity>(map.Length, Allocator.Temp);
+        entityManager.CreateEntity(entityArchetype, entityArray);
 
         var cellSize = m_tileMap.m_tileObjects[0].GetComponentInChildren<Renderer>().bounds.size;
 
@@ -97,6 +117,7 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
             }
         }
 
+        int index = 0;
         for (int x = 0; x < map.GetUpperBound(0); x++)
         {
             for (int y = 0; y < map.GetUpperBound(1); y++)
@@ -116,66 +137,39 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
                     {
                         zDir *= -1;
                     }
-                    
+
                     var position = new Vector3Int(xDir, 0, zDir);
+
                     ThreeDTileData threeDTileData = new ThreeDTileData();
                     m_tileMap.GetTileData(location, this, ref threeDTileData);
 
-                    var go = Instantiate(threeDTileData.gameObject, position, threeDTileData.transform.rotation, m_mapHolder.transform);
-                    m_tiles[location].gameObject = go;
-
                     m_tiles[location].transform = threeDTileData.transform;
+
+                    Entity entity = entityArray[index];
+
+                    entityManager.SetComponentData(entity,
+                        new Translation
+                        {
+                            Value = new float3(position.x, 0, position.z)
+                        });
+                    entityManager.SetComponentData(entity,
+                        new Rotation
+                        {
+                            Value = new quaternion(threeDTileData.transform)
+                        });
+                    entityManager.SetSharedComponentData(entity,
+                        new RenderMesh
+                        {
+                            mesh = threeDTileData.gameObject.GetComponentInChildren<MeshFilter>().sharedMesh,
+                            material = m_material
+                        });
+
+                    index++;
                 }
             }
         }
-    }
 
-    private IEnumerator GenerateGridOverTime()
-    {
-        var gridSize = m_width * m_length;
-        var cellSize = m_tileMap.m_tileObjects[0].GetComponentInChildren<Renderer>().bounds.size;
-
-        int index = 0;
-        
-        while (index < gridSize)
-        {
-            int z = index % m_length;
-            int x = Mathf.FloorToInt(index / m_length);
-
-            var location = new Vector3Int(x, z, 0);
-
-            m_tiles.Add(location, new Tile(null, Matrix4x4.identity));
-            index++;
-        }
-
-        index = 0;
-        while (index < gridSize)
-        {
-            int z = index % m_length;
-            int x = Mathf.FloorToInt(index / m_length);
-
-            var location = new Vector3Int(x, z, 0);
-
-            if (m_flipXAxis == true)
-            {
-                x *= -1;
-            }
-
-            if (m_flipZAxis == true)
-            {
-                z *= -1;
-            }
-
-            var position = new Vector3Int((int)(x * cellSize.x), 0, (int)(z * cellSize.z));
-
-            ThreeDTileData threeDTileData = new ThreeDTileData();
-            m_tileMap.GetTileData(location, this, ref threeDTileData);
-            var go = Instantiate(threeDTileData.gameObject, position, threeDTileData.transform.rotation, this.transform);
-            m_tiles[location].gameObject = go;
-            m_tiles[location].transform = threeDTileData.transform;
-            index++;
-            yield return new WaitForSeconds(tileWaitTime);
-        }
+        entityArray.Dispose();
     }
 
     public static int[,] GenerateCellularAutomata(int width, int height, float seed, int fillPercent, bool edgesAreWalls)
@@ -263,7 +257,7 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
             }
         }
         return tileCount;
-    }    
+    }
 
     public GameObject GetGameObject(Vector3Int position)
     {
