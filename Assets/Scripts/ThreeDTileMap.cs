@@ -74,16 +74,74 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
                 Destroy(m_mapHolder);
             }
 
-            GenerateMap();
+            GenerateMap_Normal();
         }
     }
 
     private void Start()
     {
-        GenerateMap();
+        //GenerateMap_Normal();
+        GenerateMap_DOTS();
     }
 
-    private void GenerateMap()
+    private void GenerateMap_Normal()
+    {
+        m_mapHolder = new GameObject("MapHolder");
+
+        m_tiles = new Dictionary<Vector3Int, Tile>();
+        //StartCoroutine(GenerateGridOverTime());
+
+        var map = GenerateCellularAutomata(m_width, m_length, UnityEngine.Random.Range(0, 99999), m_fillPercent, m_edgesAreWalls);
+        map = SmoothMooreCellularAutomata(map, m_edgesAreWalls, m_smoothCount);
+
+        var cellSize = m_tileMap.m_tileObjects[0].GetComponentInChildren<Renderer>().bounds.size;
+
+        for (int x = 0; x < map.GetUpperBound(0); x++)
+        {
+            for (int y = 0; y < map.GetUpperBound(1); y++)
+            {
+                if (map[x, y] != 0)
+                {
+                    var location = new Vector3Int(x, y, 0);
+                    m_tiles.Add(location, new Tile(null, Matrix4x4.identity));
+                }
+            }
+        }
+
+        for (int x = 0; x < map.GetUpperBound(0); x++)
+        {
+            for (int y = 0; y < map.GetUpperBound(1); y++)
+            {
+                if (map[x, y] != 0)
+                {
+                    var location = new Vector3Int(x, y, 0);
+
+                    int xDir = (int)(x * cellSize.x);
+                    int zDir = (int)(y * cellSize.z);
+                    if (m_flipXAxis == true)
+                    {
+                        xDir *= -1;
+                    }
+
+                    if (m_flipZAxis == true)
+                    {
+                        zDir *= -1;
+                    }
+
+                    var position = new Vector3Int(xDir, 0, zDir);
+                    ThreeDTileData threeDTileData = new ThreeDTileData();
+                    m_tileMap.GetTileData(location, this, ref threeDTileData);
+
+                    var go = Instantiate(threeDTileData.gameObject, position, threeDTileData.transform.rotation, m_mapHolder.transform);
+                    m_tiles[location].gameObject = go;
+
+                    m_tiles[location].transform = threeDTileData.transform;
+                }
+            }
+        }
+    }
+
+    private void GenerateMap_DOTS()
     {
         m_mapHolder = new GameObject("MapHolder");
 
@@ -97,6 +155,7 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
         EntityArchetype entityArchetype = entityManager.CreateArchetype(
             typeof(Translation),
             typeof(Rotation),
+            typeof(Scale),
             typeof(RenderMesh),
             typeof(LocalToWorld));
 
@@ -156,6 +215,11 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
                         new Rotation
                         {
                             Value = new quaternion(threeDTileData.transform)
+                        });
+                    entityManager.SetComponentData(entity,
+                        new Scale
+                        {
+                            Value = 1
                         });
                     entityManager.SetSharedComponentData(entity,
                         new RenderMesh
