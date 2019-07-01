@@ -12,6 +12,7 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
 {
     #region Private Variables
 
+    [Header("Map Visuals")]
     [SerializeField]
     private TerrainTile m_tileMap = null;
 
@@ -25,6 +26,7 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
 
     private Dictionary<Vector3Int, Tile> m_tiles = null;
 
+    [Header("Map Settings")]
     [SerializeField]
     private short m_width = 1;
 
@@ -32,7 +34,10 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
     private short m_length = 1;
 
     [SerializeField]
-    private float tileWaitTime = .25f;
+    private bool m_flipXAxis = false;
+
+    [SerializeField]
+    private bool m_flipZAxis = false;
 
     [SerializeField]
     private bool m_edgesAreWalls = false;
@@ -43,11 +48,48 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
     [SerializeField]
     private int m_fillPercent = 75;
 
+    [Header("Random Walk")]
     [SerializeField]
-    private bool m_flipXAxis = false;
+    private int m_minSectionWidth = 4;
+
+    [Header("Tunnel/River")]
+    [SerializeField]
+    private int m_numberOfRivers = 1;
+
+    [Range(0, 10)]
+    [SerializeField]
+    private int m_minPathWidth = 2;
+
+    [Range(0, 10)]
+    [SerializeField]
+    private int m_maxPathWidth = 4;
 
     [SerializeField]
-    private bool m_flipZAxis = false;
+    private int m_maxPathChange = 4;
+
+    [SerializeField]
+    private int m_roughness = 4;
+
+    [SerializeField]
+    private int m_windyness = 4;
+
+    [Header("Generate Over Time")]
+    [SerializeField]
+    private float m_tileWaitTime = .25f;
+
+    [Header("Algorithms")]
+    [SerializeField]
+    private bool m_randomWalkTopEnabled = false;
+
+    [SerializeField]
+    private bool m_randomWalkTopSmoothedEnabled = false;
+
+    [SerializeField]
+    private bool m_directionTunnelEnabled = false;
+
+    private EntityManager m_entityManager;
+
+    private NativeArray<Entity> m_entityArray;
 
     #endregion
 
@@ -80,7 +122,8 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
                 Destroy(m_mapHolder);
             }
 
-            GenerateMap_Normal();
+            //GenerateMap_Normal();
+            GenerateMap_DOTS();
         }
     }
 
@@ -91,12 +134,28 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
     private void GenerateMap_Normal()
     {
         m_mapHolder = new GameObject("MapHolder");
-
         m_tiles = new Dictionary<Vector3Int, Tile>();
-        //StartCoroutine(GenerateGridOverTime());
 
-        var map = MapFunctions.GenerateCellularAutomata(m_width, m_length, UnityEngine.Random.Range(0, 99999), m_fillPercent, m_edgesAreWalls);
+        var seed = UnityEngine.Random.Range(0, 99999);
+        var map = MapFunctions.GenerateCellularAutomata(m_width, m_length, seed, m_fillPercent, m_edgesAreWalls);
         map = MapFunctions.SmoothMooreCellularAutomata(map, m_edgesAreWalls, m_smoothCount);
+        if (m_randomWalkTopEnabled == true)
+        {
+            map = MapFunctions.RandomWalkTop(map, seed);
+            if (m_randomWalkTopSmoothedEnabled == true)
+            {
+                map = MapFunctions.RandomWalkTopSmoothed(map, seed, m_minSectionWidth);
+            }
+        }
+
+        for (int i = 0; i < m_numberOfRivers; i++)
+        {
+            if (m_directionTunnelEnabled == true)
+            {
+                var rand = UnityEngine.Random.Range(0, 2) * 2 - 1;
+                map = MapFunctions.DirectionalTunnel(map, m_minPathWidth, m_maxPathWidth, m_maxPathChange * rand, m_roughness, m_windyness, UnityEngine.Random.Range(m_width/4, m_width-(m_width / 4 )- 1));
+            }
+        }        
 
         var cellSize = m_tileMap.m_tileObjects[0].GetComponentInChildren<Renderer>().bounds.size;
 
@@ -147,27 +206,48 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
 
     private void GenerateMap_DOTS()
     {
-        m_mapHolder = new GameObject("MapHolder");
-
         m_tiles = new Dictionary<Vector3Int, Tile>();
 
-        var map = MapFunctions.GenerateCellularAutomata(m_width, m_length, UnityEngine.Random.Range(0, 99999), m_fillPercent, m_edgesAreWalls);
+        var seed = UnityEngine.Random.Range(0, 99999);
+        var map = MapFunctions.GenerateCellularAutomata(m_width, m_length, seed, m_fillPercent, m_edgesAreWalls);
         map = MapFunctions.SmoothMooreCellularAutomata(map, m_edgesAreWalls, m_smoothCount);
 
-        EntityManager entityManager = World.Active.EntityManager;
+        if (m_randomWalkTopEnabled == true)
+        {
+            map = MapFunctions.RandomWalkTop(map, seed);
+            if (m_randomWalkTopSmoothedEnabled == true)
+            {
+                map = MapFunctions.RandomWalkTopSmoothed(map, seed, m_minSectionWidth);
+            }
+        }
 
-        EntityArchetype entityArchetype = entityManager.CreateArchetype(
-            typeof(Translation),
-            typeof(Rotation),
-            typeof(Scale),
-            typeof(RenderMesh),
-            typeof(LocalToWorld));
+        for (int i = 0; i < m_numberOfRivers; i++)
+        {
+            if (m_directionTunnelEnabled == true)
+            {
+                var rand = UnityEngine.Random.Range(0, 2) * 2 - 1;
+                map = MapFunctions.DirectionalTunnel(map, m_minPathWidth, m_maxPathWidth, m_maxPathChange * rand, m_roughness, m_windyness, UnityEngine.Random.Range(m_width / 4, m_width - (m_width / 4) - 1));
+            }
+        }
 
-        NativeArray<Entity> entityArray = new NativeArray<Entity>(map.Length, Allocator.Temp);
-        entityManager.CreateEntity(entityArchetype, entityArray);
+        if (m_entityArray != null && m_entityArray.Length > 0)
+        {
+            for (int i = 0; i < m_entityArray.Length; i++)
+            {
+                var entity = m_entityArray[i];
+            }
+        }
+
+        CreateEntities(map.Length, out m_entityManager, out m_entityArray);
 
         var cellSize = m_tileMap.m_tileObjects[0].GetComponentInChildren<Renderer>().bounds.size;
+        InitializeMapLayout(map);
+        UpdateMapLayout(map, cellSize);
+        m_entityArray.Dispose();
+    }
 
+    private void InitializeMapLayout(int[,] map)
+    {
         for (int x = 0; x < map.GetUpperBound(0); x++)
         {
             for (int y = 0; y < map.GetUpperBound(1); y++)
@@ -179,7 +259,10 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
                 }
             }
         }
+    }
 
+    private void UpdateMapLayout(int[,] map, Vector3 cellSize)
+    {
         int index = 0;
         for (int x = 0; x < map.GetUpperBound(0); x++)
         {
@@ -207,37 +290,53 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
                     m_tileMap.GetTileData(location, this, ref threeDTileData);
 
                     m_tiles[location].transform = threeDTileData.transform;
-
-                    Entity entity = entityArray[index];
-
-                    entityManager.SetComponentData(entity,
-                        new Translation
-                        {
-                            Value = new float3(position.x, 0, position.z)
-                        });
-                    entityManager.SetComponentData(entity,
-                        new Rotation
-                        {
-                            Value = new quaternion(threeDTileData.transform)
-                        });
-                    entityManager.SetComponentData(entity,
-                        new Scale
-                        {
-                            Value = 1
-                        });
-                    entityManager.SetSharedComponentData(entity,
-                        new RenderMesh
-                        {
-                            mesh = threeDTileData.gameObject.GetComponentInChildren<MeshFilter>().sharedMesh,
-                            material = m_material
-                        });
+                    UpdateEntities(index, position, threeDTileData);
 
                     index++;
                 }
             }
         }
+    }
 
-        entityArray.Dispose();
+    private void UpdateEntities(int index, Vector3Int position, ThreeDTileData threeDTileData)
+    {
+        Entity entity = m_entityArray[index];
+
+        m_entityManager.SetComponentData(entity,
+            new Translation
+            {
+                Value = new float3(position.x, 0, position.z)
+            });
+        m_entityManager.SetComponentData(entity,
+            new Rotation
+            {
+                Value = new quaternion(threeDTileData.transform)
+            });
+        m_entityManager.SetComponentData(entity,
+            new Scale
+            {
+                Value = 1
+            });
+        m_entityManager.SetSharedComponentData(entity,
+            new RenderMesh
+            {
+                mesh = threeDTileData.gameObject.GetComponentInChildren<MeshFilter>().sharedMesh,
+                material = m_material
+            });
+    }
+
+    private static void CreateEntities(int size, out EntityManager entityManager, out NativeArray<Entity> entityArray)
+    {
+        entityManager = World.Active.EntityManager;
+        EntityArchetype entityArchetype = entityManager.CreateArchetype(
+            typeof(Translation),
+            typeof(Rotation),
+            typeof(Scale),
+            typeof(RenderMesh),
+            typeof(LocalToWorld));
+
+        entityArray = new NativeArray<Entity>(size, Allocator.Temp);
+        entityManager.CreateEntity(entityArchetype, entityArray);
     }
 
     #endregion

@@ -3,6 +3,131 @@
 public static class MapFunctions
 {
     /// <summary>
+    /// Creates a tunnel of length height. Takes into account roughness and windyness
+    /// </summary>
+    /// <param name="map">The array that holds the map information</param>
+    /// <param name="width">The width of the map</param>
+    /// <param name="height">The height of the map</param>
+    /// <param name="minPathWidth">The min width of the path</param>
+    /// <param name="maxPathWidth">The max width of the path, ensure it is smaller than then width of the map</param>
+    /// <param name="maxPathChange">The max amount we can change the center point of the path by</param>
+    /// <param name="roughness">How much the edges of the tunnel vary</param>
+    /// <param name="windyness">how much the direction of the tunnel varies</param>
+    /// <returns>The map after being tunneled</returns>
+    public static int[,] DirectionalTunnel(int[,] map, int minPathWidth, int maxPathWidth, int maxPathChange, int roughness, int windyness, int tunnelCenterDivisor)
+    {
+        //This value goes from its minus counterpart to its positive value, in this case with a width value of 1, the width of the tunnel is 3
+        int tunnelWidth = 1;
+
+        //Set the start X position to the center of the tunnel
+        int x = tunnelCenterDivisor;
+
+        //Set up our seed for the random.
+        System.Random rand = new System.Random(Time.time.GetHashCode());
+
+        //Create the first part of the tunnel
+        for (int i = -tunnelWidth; i <= tunnelWidth; i++)
+        {
+            map[x + i, 0] = 0;
+        }
+
+        //Cycle through the array
+        for (int y = 1; y < map.GetUpperBound(1); y++)
+        {
+            //Check if we can change the roughness
+            if (rand.Next(0, 100) > roughness)
+            {
+
+                //Get the amount we will change for the width
+                int widthChange = Random.Range(-maxPathWidth, maxPathWidth);
+                tunnelWidth += widthChange;
+
+                //Check to see we arent making the path too small
+                if (tunnelWidth < minPathWidth)
+                {
+                    tunnelWidth = minPathWidth;
+                }
+
+                //Check that the path width isnt over our maximum
+                if (tunnelWidth > maxPathWidth)
+                {
+                    tunnelWidth = maxPathWidth;
+                }
+            }
+
+            //Check if we can change the windyness
+            if (rand.Next(0, 100) > windyness)
+            {
+                //Get the amount we will change for the x position
+                int xChange = Random.Range(-maxPathChange, maxPathChange);
+                x += xChange;
+
+                //Check we arent too close to the left side of the map
+                if (x < maxPathWidth)
+                {
+                    x = maxPathWidth;
+                }
+                //Check we arent too close to the right side of the map
+                if (x > (map.GetUpperBound(0) - maxPathWidth))
+                {
+                    x = map.GetUpperBound(0) - maxPathWidth;
+                }
+
+            }
+
+            //Work through the width of the tunnel
+            for (int i = -tunnelWidth; i <= tunnelWidth; i++)
+            {
+                map[x + i, y] = 0;
+            }
+        }
+        return map;
+    }
+
+    /// <summary>
+    /// Generates the top layer of our level using Random Walk
+    /// </summary>
+    /// <param name="map">Map that we are using to generate</param>
+    /// <param name="seed">The seed we will use in our random</param>
+    /// <returns>The random walk map generated</returns>
+    public static int[,] RandomWalkTop(int[,] map, float seed)
+    {
+        //Seed our random
+        System.Random rand = new System.Random(seed.GetHashCode());
+
+        //Set our starting height
+        int lastHeight = Random.Range(0, map.GetUpperBound(1));
+
+        //Cycle through our width
+        for (int x = 0; x < map.GetUpperBound(0); x++)
+        {
+            //Flip a coin
+            int nextMove = rand.Next(2);
+
+            //If heads, and we aren't near the bottom, minus some height
+            if (nextMove == 0 && lastHeight > 2)
+            {
+                lastHeight--;
+            }
+            //If tails, and we aren't near the top, add some height
+            else if (nextMove == 1 && lastHeight < map.GetUpperBound(1) - 2)
+            {
+                lastHeight++;
+            }
+
+            //Circle through from the lastheight to the bottom
+            for (int y = lastHeight; y >= 0; y--)
+            {
+               // if (map[x, y] == 0) continue;
+
+                map[x, y] = 1;
+            }
+        }
+        //Return the map
+        return map;
+    }
+
+    /// <summary>
 	/// Generates a smoothed random walk top.
 	/// </summary>
 	/// <param name="map">Map to modify</param>
@@ -41,10 +166,12 @@ public static class MapFunctions
             }
             //Increment the section width
             sectionWidth++;
-
+            
             //Work our way from the height down to 0
             for (int y = lastHeight; y >= 0; y--)
             {
+               // if (map[x, y] == 0) continue;
+
                 map[x, y] = 1;
             }
         }
