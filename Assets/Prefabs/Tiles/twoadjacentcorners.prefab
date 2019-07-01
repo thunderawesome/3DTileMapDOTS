@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 8997485784571444805}
   - component: {fileID: 935709211255975240}
   - component: {fileID: 1203296519314908815}
+  - component: {fileID: 920785774546404958}
   m_Layer: 0
   m_Name: twoadjacentcorners
   m_TagString: Untagged
@@ -108,3 +109,16 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &920785774546404958
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4295246013630636850}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 17, y: 1, z: 17}
+  m_Center: {x: 0, y: 0.5, z: 0}

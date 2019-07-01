@@ -472,12 +472,23 @@ MonoBehaviour:
   m_material: {fileID: 2100000, guid: 44e483c9c092a3c46baea06ef02b7da3, type: 2}
   m_width: 50
   m_length: 50
-  tileWaitTime: 0.25
-  m_edgesAreWalls: 0
-  m_smoothCount: 15
-  m_fillPercent: 55
   m_flipXAxis: 1
   m_flipZAxis: 0
+  m_edgesAreWalls: 0
+  m_smoothCount: 15
+  m_fillPercent: 75
+  m_minSectionWidth: 1
+  m_minPathWidth: 1
+  m_maxPathWidth: 1
+  m_maxPathChange: 1
+  m_roughness: 0
+  m_windyness: 4
+  m_startPositionDivisor: 2
+  tileWaitTime: 0.25
+  m_randomWalkTopEnabled: 0
+  m_randomWalkTopSmoothedEnabled: 0
+  m_directionTunnelEnabled: 1
+  m_numberOfRivers: 1
 --- !u!1001 &693619065
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6983700619899338205}
   - component: {fileID: 7465872915725282746}
   - component: {fileID: 3449931750292001238}
+  - component: {fileID: 4543574135609230143}
   m_Layer: 0
   m_Name: twosidesandonecorner
   m_TagString: Untagged
@@ -77,6 +78,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &4543574135609230143
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2686155915885931215}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 17, y: 1, z: 17}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &8739354827357394909
 GameObject:
   m_ObjectHideFlags: 0

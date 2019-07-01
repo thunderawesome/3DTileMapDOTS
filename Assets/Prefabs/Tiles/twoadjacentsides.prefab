@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4391203586576226798}
   - component: {fileID: 7441418387713536599}
   - component: {fileID: 747597845168980467}
+  - component: {fileID: 7251784316816212715}
   m_Layer: 0
   m_Name: twoadjacentsides
   m_TagString: Untagged
@@ -77,6 +78,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &7251784316816212715
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 453496523440895999}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 17, y: 1, z: 17}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &2068951301891423199
 GameObject:
   m_ObjectHideFlags: 0

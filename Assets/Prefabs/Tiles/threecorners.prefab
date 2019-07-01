@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6184620307948227540}
   - component: {fileID: 4229755931827955369}
   - component: {fileID: 4163552942945831412}
+  - component: {fileID: 5005602623532992182}
   m_Layer: 0
   m_Name: threecorners
   m_TagString: Untagged
@@ -77,6 +78,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &5005602623532992182
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7851797691251639075}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 17, y: 1, z: 17}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &8843192141558567549
 GameObject:
   m_ObjectHideFlags: 0
