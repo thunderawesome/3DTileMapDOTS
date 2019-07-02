@@ -470,25 +470,24 @@ MonoBehaviour:
   m_tileMap: {fileID: 11400000, guid: 2d994ef6db4f0384690b8b6dd86c97c4, type: 2}
   m_mesh: {fileID: -4112178927078912080, guid: f1bf8908cd9b7f44bba228e338912917, type: 3}
   m_material: {fileID: 2100000, guid: 44e483c9c092a3c46baea06ef02b7da3, type: 2}
-  m_width: 50
-  m_length: 50
+  m_width: 80
+  m_length: 70
   m_flipXAxis: 1
   m_flipZAxis: 0
   m_edgesAreWalls: 0
   m_smoothCount: 15
   m_fillPercent: 75
   m_minSectionWidth: 1
+  m_numberOfRivers: 2
   m_minPathWidth: 1
   m_maxPathWidth: 1
   m_maxPathChange: 1
   m_roughness: 0
-  m_windyness: 4
-  m_startPositionDivisor: 2
-  tileWaitTime: 0.25
+  m_windyness: 1
+  m_tileWaitTime: 0.25
   m_randomWalkTopEnabled: 0
   m_randomWalkTopSmoothedEnabled: 0
   m_directionTunnelEnabled: 1
-  m_numberOfRivers: 1
 --- !u!1001 &693619065
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -943,7 +942,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 3000
+  orthographic size: 750
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -967,7 +966,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -1500, y: 577, z: 1500}
+  m_LocalPosition: {x: -600, y: 100, z: 600}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

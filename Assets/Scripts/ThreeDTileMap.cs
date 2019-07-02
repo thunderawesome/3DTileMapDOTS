@@ -122,9 +122,32 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
                 Destroy(m_mapHolder);
             }
 
-            //GenerateMap_Normal();
-            GenerateMap_DOTS();
+            RegenerateDOTSMap();
         }
+    }
+
+    private void OnDestroy()
+    {
+        m_entityArray.Dispose();
+    }
+
+    private void RegenerateDOTSMap()
+    {
+        m_tiles.Clear();
+        m_tiles = new Dictionary<Vector3Int, Tile>();
+
+        var cellSize = m_tileMap.m_tileObjects[0].GetComponentInChildren<Renderer>().bounds.size;
+
+        var seed = UnityEngine.Random.Range(0, 99999);
+        var map = MapFunctions.GenerateCellularAutomata(m_width, m_length, seed, m_fillPercent, m_edgesAreWalls);
+        map = MapFunctions.SmoothMooreCellularAutomata(map, m_edgesAreWalls, m_smoothCount);
+        map = RandomWalkTopAlgorithm(seed, map);
+        map = DirectionalTunnelAlgorithm(map);
+
+        InitializeMapLayout(map);
+
+        UpdateMapLayout(map, cellSize);
+        //m_entityArray.Dispose();
     }
 
     #endregion
@@ -211,16 +234,23 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
         var seed = UnityEngine.Random.Range(0, 99999);
         var map = MapFunctions.GenerateCellularAutomata(m_width, m_length, seed, m_fillPercent, m_edgesAreWalls);
         map = MapFunctions.SmoothMooreCellularAutomata(map, m_edgesAreWalls, m_smoothCount);
+        map = RandomWalkTopAlgorithm(seed, map);
+        map = DirectionalTunnelAlgorithm(map);
 
-        if (m_randomWalkTopEnabled == true)
+        if (m_entityArray != null && m_entityArray.Length <= 0)
         {
-            map = MapFunctions.RandomWalkTop(map, seed);
-            if (m_randomWalkTopSmoothedEnabled == true)
-            {
-                map = MapFunctions.RandomWalkTopSmoothed(map, seed, m_minSectionWidth);
-            }
+            CreateEntities(map.Length, out m_entityManager, out m_entityArray, Allocator.Persistent);
+            InitializeMapLayout(map);
         }
 
+        var cellSize = m_tileMap.m_tileObjects[0].GetComponentInChildren<Renderer>().bounds.size;
+
+        UpdateMapLayout(map, cellSize);
+        //m_entityArray.Dispose();
+    }
+
+    private int[,] DirectionalTunnelAlgorithm(int[,] map)
+    {
         for (int i = 0; i < m_numberOfRivers; i++)
         {
             if (m_directionTunnelEnabled == true)
@@ -230,20 +260,21 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
             }
         }
 
-        if (m_entityArray != null && m_entityArray.Length > 0)
+        return map;
+    }
+
+    private int[,] RandomWalkTopAlgorithm(int seed, int[,] map)
+    {
+        if (m_randomWalkTopEnabled == true)
         {
-            for (int i = 0; i < m_entityArray.Length; i++)
+            map = MapFunctions.RandomWalkTop(map, seed);
+            if (m_randomWalkTopSmoothedEnabled == true)
             {
-                var entity = m_entityArray[i];
+                map = MapFunctions.RandomWalkTopSmoothed(map, seed, m_minSectionWidth);
             }
         }
 
-        CreateEntities(map.Length, out m_entityManager, out m_entityArray);
-
-        var cellSize = m_tileMap.m_tileObjects[0].GetComponentInChildren<Renderer>().bounds.size;
-        InitializeMapLayout(map);
-        UpdateMapLayout(map, cellSize);
-        m_entityArray.Dispose();
+        return map;
     }
 
     private void InitializeMapLayout(int[,] map)
@@ -272,17 +303,8 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
                 {
                     var location = new Vector3Int(x, y, 0);
 
-                    int xDir = (int)(x * cellSize.x);
-                    int zDir = (int)(y * cellSize.z);
-                    if (m_flipXAxis == true)
-                    {
-                        xDir *= -1;
-                    }
-
-                    if (m_flipZAxis == true)
-                    {
-                        zDir *= -1;
-                    }
+                    int xDir, zDir;
+                    FlipCell(cellSize, x, y, out xDir, out zDir);
 
                     var position = new Vector3Int(xDir, 0, zDir);
 
@@ -290,18 +312,32 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
                     m_tileMap.GetTileData(location, this, ref threeDTileData);
 
                     m_tiles[location].transform = threeDTileData.transform;
-                    UpdateEntities(index, position, threeDTileData);
 
+                    var entity = m_entityArray[index];
+                    UpdateEntity(entity, position, threeDTileData);
                     index++;
                 }
             }
         }
     }
 
-    private void UpdateEntities(int index, Vector3Int position, ThreeDTileData threeDTileData)
+    private void FlipCell(Vector3 cellSize, int x, int y, out int xDir, out int zDir)
     {
-        Entity entity = m_entityArray[index];
+        xDir = (int)(x * cellSize.x);
+        zDir = (int)(y * cellSize.z);
+        if (m_flipXAxis == true)
+        {
+            xDir *= -1;
+        }
 
+        if (m_flipZAxis == true)
+        {
+            zDir *= -1;
+        }
+    }
+
+    private void UpdateEntity(Entity entity, Vector3Int position, ThreeDTileData threeDTileData)
+    {
         m_entityManager.SetComponentData(entity,
             new Translation
             {
@@ -325,7 +361,7 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
             });
     }
 
-    private static void CreateEntities(int size, out EntityManager entityManager, out NativeArray<Entity> entityArray)
+    private static void CreateEntities(int size, out EntityManager entityManager, out NativeArray<Entity> entityArray, Allocator allocator)
     {
         entityManager = World.Active.EntityManager;
         EntityArchetype entityArchetype = entityManager.CreateArchetype(
@@ -335,7 +371,7 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
             typeof(RenderMesh),
             typeof(LocalToWorld));
 
-        entityArray = new NativeArray<Entity>(size, Allocator.Temp);
+        entityArray = new NativeArray<Entity>(size, allocator);
         entityManager.CreateEntity(entityArchetype, entityArray);
     }
 
