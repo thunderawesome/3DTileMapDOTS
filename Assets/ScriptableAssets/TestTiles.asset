@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a3f6b3609905c8f4cbc9987d91ba567b, type: 3}
-  m_Name: Autotile
+  m_Name: TestTiles
   m_EditorClassIdentifier: 
   m_tileObjects:
   - {fileID: 6978574929142190257, guid: 40fcce1756105e04d9c659d826ecf82d, type: 3}
