@@ -147,7 +147,6 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
         InitializeMapLayout(map);
 
         UpdateMapLayout(map, cellSize);
-        //m_entityArray.Dispose();
     }
 
     #endregion
@@ -176,9 +175,9 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
             if (m_directionTunnelEnabled == true)
             {
                 var rand = UnityEngine.Random.Range(0, 2) * 2 - 1;
-                map = MapFunctions.DirectionalTunnel(map, m_minPathWidth, m_maxPathWidth, m_maxPathChange * rand, m_roughness, m_windyness, UnityEngine.Random.Range(m_width/4, m_width-(m_width / 4 )- 1));
+                map = MapFunctions.DirectionalTunnel(map, m_minPathWidth, m_maxPathWidth, m_maxPathChange * rand, m_roughness, m_windyness, UnityEngine.Random.Range(m_width / 4, m_width - (m_width / 4) - 1));
             }
-        }        
+        }
 
         var cellSize = m_tileMap.m_tileObjects[0].GetComponentInChildren<Renderer>().bounds.size;
 
@@ -246,7 +245,6 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
         var cellSize = m_tileMap.m_tileObjects[0].GetComponentInChildren<Renderer>().bounds.size;
 
         UpdateMapLayout(map, cellSize);
-        //m_entityArray.Dispose();
     }
 
     private int[,] DirectionalTunnelAlgorithm(int[,] map)
