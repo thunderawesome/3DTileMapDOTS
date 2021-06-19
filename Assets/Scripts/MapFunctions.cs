@@ -14,7 +14,7 @@ public static class MapFunctions
     /// <param name="roughness">How much the edges of the tunnel vary</param>
     /// <param name="windyness">how much the direction of the tunnel varies</param>
     /// <returns>The map after being tunneled</returns>
-    public static int[,] DirectionalTunnel(int[,] map, int minPathWidth, int maxPathWidth, int maxPathChange, int roughness, int windyness, int tunnelCenterDivisor)
+    public static int[,] DirectionalTunnel(int seed, int[,] map, int minPathWidth, int maxPathWidth, int maxPathChange, int roughness, int windyness, int tunnelCenterDivisor)
     {
         //This value goes from its minus counterpart to its positive value, in this case with a width value of 1, the width of the tunnel is 3
         int tunnelWidth = 1;
@@ -23,7 +23,7 @@ public static class MapFunctions
         int x = tunnelCenterDivisor;
 
         //Set up our seed for the random.
-        System.Random rand = new System.Random(Time.time.GetHashCode());
+        System.Random rand = new System.Random(seed);
 
         //Create the first part of the tunnel
         for (int i = -tunnelWidth; i <= tunnelWidth; i++)
@@ -39,7 +39,7 @@ public static class MapFunctions
             {
 
                 //Get the amount we will change for the width
-                int widthChange = Random.Range(-maxPathWidth, maxPathWidth);
+                int widthChange = rand.Next(-maxPathWidth, maxPathWidth);
                 tunnelWidth += widthChange;
 
                 //Check to see we arent making the path too small
@@ -59,7 +59,7 @@ public static class MapFunctions
             if (rand.Next(0, 100) > windyness)
             {
                 //Get the amount we will change for the x position
-                int xChange = Random.Range(-maxPathChange, maxPathChange);
+                int xChange = rand.Next(-maxPathChange, maxPathChange);
                 x += xChange;
 
                 //Check we arent too close to the left side of the map
@@ -96,7 +96,7 @@ public static class MapFunctions
         System.Random rand = new System.Random(seed.GetHashCode());
 
         //Set our starting height
-        int lastHeight = Random.Range(0, map.GetUpperBound(1));
+        int lastHeight = rand.Next(0, map.GetUpperBound(1));
 
         //Cycle through our width
         for (int x = 0; x < map.GetUpperBound(0); x++)
@@ -140,18 +140,16 @@ public static class MapFunctions
         System.Random rand = new System.Random(seed.GetHashCode());
 
         //Determine the start position
-        int lastHeight = Random.Range(0, map.GetUpperBound(1));
-
-        //Used to determine which direction to go
-        int nextMove = 0;
+        int lastHeight = rand.Next(0, map.GetUpperBound(1));
         //Used to keep track of the current sections width
         int sectionWidth = 0;
 
         //Work through the array width
         for (int x = 0; x <= map.GetUpperBound(0); x++)
         {
+            //Used to determine which direction to go
             //Determine the next move
-            nextMove = rand.Next(2);
+            int nextMove = rand.Next(2);
 
             //Only change the height if we have used the current height more than the minimum required section width
             if (nextMove == 0 && lastHeight > 0 && sectionWidth > minSectionWidth)

@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Rendering;
 using Unity.Transforms;
@@ -11,6 +14,9 @@ using UnityEngine;
 public class ThreeDTileMap : MonoBehaviour, ITileGrid
 {
     #region Private Variables
+
+    [SerializeField]
+    private bool m_useDots = false;
 
     [Header("Map Visuals")]
     [SerializeField]
@@ -107,10 +113,9 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
 
     #region Unity Methods
 
-    private void Start()
+    private async void Start()
     {
-        //GenerateMap_Normal();
-        GenerateMap_DOTS();
+        await InitializeMapGeneration();
     }
 
     private void Update()
@@ -122,7 +127,14 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
                 Destroy(m_mapHolder);
             }
 
-            RegenerateDOTSMap();
+            if (m_useDots)
+            {
+                RegenerateDOTSMap();
+            }
+            else
+            {
+                RegenerateMapAsync();
+            }
         }
     }
 
@@ -131,12 +143,28 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
         m_entityArray.Dispose();
     }
 
+    #endregion
+
+    #region Private Methods   
+
+    private async Task InitializeMapGeneration()
+    {
+        if (m_useDots)
+        {
+            GenerateMap_DOTS();
+        }
+        else
+        {
+            await GenerateMapAsync();
+        }
+    }
+
     private void RegenerateDOTSMap()
     {
         m_tiles.Clear();
         m_tiles = new Dictionary<Vector3Int, Tile>();
 
-        var cellSize = m_tileMap.m_tileObjects[0].GetComponentInChildren<Renderer>().bounds.size;
+        var cellSize = m_tileMap.Objects[0].GetComponentInChildren<Renderer>().bounds.size;
 
         var seed = UnityEngine.Random.Range(0, 99999);
         var map = MapFunctions.GenerateCellularAutomata(m_width, m_length, seed, m_fillPercent, m_edgesAreWalls);
@@ -149,24 +177,35 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
         UpdateMapLayout(map, cellSize);
     }
 
-    #endregion
+    private async Task RegenerateMapAsync()
+    {
+        Destroy(m_mapHolder);
+        await GenerateMapAsync();
+    }
 
-    #region Private Methods   
-
-    private void GenerateMap_Normal()
+    private async Task GenerateMapAsync()
     {
         m_mapHolder = new GameObject("MapHolder");
         m_tiles = new Dictionary<Vector3Int, Tile>();
 
+        var tasks = new List<Task<int[,]>>();
+
         var seed = UnityEngine.Random.Range(0, 99999);
-        var map = MapFunctions.GenerateCellularAutomata(m_width, m_length, seed, m_fillPercent, m_edgesAreWalls);
-        map = MapFunctions.SmoothMooreCellularAutomata(map, m_edgesAreWalls, m_smoothCount);
+        int[,] map;
+        var cellularAutomataTask = Task.Run(() => map = ApplyCellularAutomata(seed));
+        tasks.Add(cellularAutomataTask);
+
         if (m_randomWalkTopEnabled == true)
         {
-            map = MapFunctions.RandomWalkTop(map, seed);
+            var cellularAutomataResult = await cellularAutomataTask;
+            var randomWalkTopTask = Task.Run(() => map = MapFunctions.RandomWalkTop(cellularAutomataResult, seed));
+            tasks.Add(randomWalkTopTask);
+
             if (m_randomWalkTopSmoothedEnabled == true)
             {
-                map = MapFunctions.RandomWalkTopSmoothed(map, seed, m_minSectionWidth);
+                var randomWalkTopResult = await randomWalkTopTask;
+                var randomWalkTopSmoothedTask = Task.Run(() => map = MapFunctions.RandomWalkTopSmoothed(randomWalkTopResult, seed, m_minSectionWidth));
+                tasks.Add(randomWalkTopSmoothedTask);
             }
         }
 
@@ -174,12 +213,24 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
         {
             if (m_directionTunnelEnabled == true)
             {
-                var rand = UnityEngine.Random.Range(0, 2) * 2 - 1;
-                map = MapFunctions.DirectionalTunnel(map, m_minPathWidth, m_maxPathWidth, m_maxPathChange * rand, m_roughness, m_windyness, UnityEngine.Random.Range(m_width / 4, m_width - (m_width / 4) - 1));
+                var mapResults = await Task.WhenAll(tasks);
+                var riverSeed = UnityEngine.Random.Range(0, 2) * 2 - 1;
+
+                var seed2 = UnityEngine.Random.Range(0, 99999);
+
+                var timeSeed = Time.time.GetHashCode();
+                //Seed our random
+                System.Random rand = new System.Random(seed2);
+                
+                var directionalTunnelTask = Task.Run(() => map = MapFunctions.DirectionalTunnel(timeSeed, mapResults[mapResults.Length - 1], m_minPathWidth, m_maxPathWidth, m_maxPathChange * Math.Abs(riverSeed), m_roughness, m_windyness, rand.Next(0, m_width-1)));
+                tasks.Add(directionalTunnelTask);
             }
         }
 
-        var cellSize = m_tileMap.m_tileObjects[0].GetComponentInChildren<Renderer>().bounds.size;
+        var result = await Task.WhenAll(tasks);
+
+        var cellSize = m_tileMap.Objects[0].GetComponentInChildren<Renderer>().bounds.size;
+        map = result[result.Length - 1];
 
         for (int x = 0; x < map.GetUpperBound(0); x++)
         {
@@ -226,8 +277,16 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
         }
     }
 
+    private int[,] ApplyCellularAutomata(int seed)
+    {
+        var map = MapFunctions.GenerateCellularAutomata(m_width, m_length, seed, m_fillPercent, m_edgesAreWalls);
+        map = MapFunctions.SmoothMooreCellularAutomata(map, m_edgesAreWalls, m_smoothCount);
+        return map;
+    }
+
     private void GenerateMap_DOTS()
     {
+        m_mapHolder = new GameObject("MapHolder");
         m_tiles = new Dictionary<Vector3Int, Tile>();
 
         var seed = UnityEngine.Random.Range(0, 99999);
@@ -242,7 +301,7 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
             InitializeMapLayout(map);
         }
 
-        var cellSize = m_tileMap.m_tileObjects[0].GetComponentInChildren<Renderer>().bounds.size;
+        var cellSize = m_tileMap.Objects[0].GetComponentInChildren<Renderer>().bounds.size;
 
         UpdateMapLayout(map, cellSize);
     }
@@ -254,7 +313,7 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
             if (m_directionTunnelEnabled == true)
             {
                 var rand = UnityEngine.Random.Range(0, 2) * 2 - 1;
-                map = MapFunctions.DirectionalTunnel(map, m_minPathWidth, m_maxPathWidth, m_maxPathChange * rand, m_roughness, m_windyness, UnityEngine.Random.Range(m_width / 4, m_width - (m_width / 4) - 1));
+                map = MapFunctions.DirectionalTunnel(rand, map, m_minPathWidth, m_maxPathWidth, m_maxPathChange * rand, m_roughness, m_windyness, UnityEngine.Random.Range(m_width / 4, m_width - (m_width / 4) - 1));
             }
         }
 
@@ -301,8 +360,7 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
                 {
                     var location = new Vector3Int(x, y, 0);
 
-                    int xDir, zDir;
-                    FlipCell(cellSize, x, y, out xDir, out zDir);
+                    FlipCell(cellSize, x, y, out int xDir, out int zDir);
 
                     var position = new Vector3Int(xDir, 0, zDir);
 
@@ -361,7 +419,7 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
 
     private static void CreateEntities(int size, out EntityManager entityManager, out NativeArray<Entity> entityArray, Allocator allocator)
     {
-        entityManager = World.Active.EntityManager;
+        entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
         EntityArchetype entityArchetype = entityManager.CreateArchetype(
             typeof(Translation),
             typeof(Rotation),
@@ -417,3 +475,20 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
 
     #endregion
 }
+
+//public class PositionSystem : JobComponentSystem
+//{
+//    protected override JobHandle OnUpdate(JobHandle inputDeps)
+//    {
+//        //throw new NotImplementedException();
+//    }
+
+//    [BurstCompile]
+//    struct PositionPos : IJobForEach<Translation>
+//    {
+//        public void Execute(ref Translation c0)
+//        {
+//            throw new NotImplementedException();
+//        }
+//    }
+//}

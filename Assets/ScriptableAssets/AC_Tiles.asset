@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3f6b3609905c8f4cbc9987d91ba567b, type: 3}
   m_Name: AC_Tiles
   m_EditorClassIdentifier: 
-  m_tileObjects:
+  m_objects:
   - {fileID: -927199367670048503, guid: 4cc369e135c666349928a5b132305560, type: 3}
   - {fileID: -927199367670048503, guid: a659ad030a8179b4c99faa0ceb6b11c1, type: 3}
   - {fileID: -927199367670048503, guid: d13835e08381dbb42b9db5ceed15e01d, type: 3}

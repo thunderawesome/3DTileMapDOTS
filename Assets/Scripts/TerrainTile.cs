@@ -25,7 +25,9 @@ public enum Neighbor
 public class TerrainTile : ScriptableObject
 {
     [SerializeField]
-    public GameObject[] m_tileObjects;
+    private GameObject[] m_objects;
+
+    public GameObject[] Objects { get => m_objects; set => m_objects = value; }
 
     public void RefreshTile(Vector3Int location, ITileGrid tileMap)
     {
@@ -69,9 +71,9 @@ public class TerrainTile : ScriptableObject
         if ((original | 191) < 255) { mask = mask & 95; }
 
         int index = GetIndex((byte)mask);
-        if (index >= 0 && index < m_tileObjects.Length && TileValue(tileMap, location))
+        if (index >= 0 && index < Objects.Length && TileValue(tileMap, location))
         {
-            tileData.gameObject = m_tileObjects[index];
+            tileData.gameObject = Objects[index];
             tileData.transform = GetTransform((byte)mask);
         }
     }
@@ -189,9 +191,9 @@ public class TerrainTileEditor : Editor
 
     public void OnEnable()
     {
-        if (tile.m_tileObjects == null || tile.m_tileObjects.Length != 15)
+        if (tile.Objects == null || tile.Objects.Length != 15)
         {
-            tile.m_tileObjects = new GameObject[15];
+            tile.Objects = new GameObject[15];
             EditorUtility.SetDirty(tile);
         }
     }
@@ -206,21 +208,21 @@ public class TerrainTileEditor : Editor
         EditorGUIUtility.labelWidth = 210;
 
         EditorGUI.BeginChangeCheck();
-        tile.m_tileObjects[0] = (GameObject)EditorGUILayout.ObjectField("Filled", tile.m_tileObjects[0], typeof(GameObject), false, null);
-        tile.m_tileObjects[1] = (GameObject)EditorGUILayout.ObjectField("Three Sides", tile.m_tileObjects[1], typeof(GameObject), false, null);
-        tile.m_tileObjects[2] = (GameObject)EditorGUILayout.ObjectField("Two Sides and One Corner", tile.m_tileObjects[2], typeof(GameObject), false, null);
-        tile.m_tileObjects[3] = (GameObject)EditorGUILayout.ObjectField("Two Adjacent Sides", tile.m_tileObjects[3], typeof(GameObject), false, null);
-        tile.m_tileObjects[4] = (GameObject)EditorGUILayout.ObjectField("Two Opposite Sides", tile.m_tileObjects[4], typeof(GameObject), false, null);
-        tile.m_tileObjects[5] = (GameObject)EditorGUILayout.ObjectField("One Side and Two Corners", tile.m_tileObjects[5], typeof(GameObject), false, null);
-        tile.m_tileObjects[6] = (GameObject)EditorGUILayout.ObjectField("One Side and One Lower Corner", tile.m_tileObjects[6], typeof(GameObject), false, null);
-        tile.m_tileObjects[7] = (GameObject)EditorGUILayout.ObjectField("One Side and One Upper Corner", tile.m_tileObjects[7], typeof(GameObject), false, null);
-        tile.m_tileObjects[8] = (GameObject)EditorGUILayout.ObjectField("One Side", tile.m_tileObjects[8], typeof(GameObject), false, null);
-        tile.m_tileObjects[9] = (GameObject)EditorGUILayout.ObjectField("Four Corners", tile.m_tileObjects[9], typeof(GameObject), false, null);
-        tile.m_tileObjects[10] = (GameObject)EditorGUILayout.ObjectField("Three Corners", tile.m_tileObjects[10], typeof(GameObject), false, null);
-        tile.m_tileObjects[11] = (GameObject)EditorGUILayout.ObjectField("Two Adjacent Corners", tile.m_tileObjects[11], typeof(GameObject), false, null);
-        tile.m_tileObjects[12] = (GameObject)EditorGUILayout.ObjectField("Two Opposite Corners", tile.m_tileObjects[12], typeof(GameObject), false, null);
-        tile.m_tileObjects[13] = (GameObject)EditorGUILayout.ObjectField("One Corner", tile.m_tileObjects[13], typeof(GameObject), false, null);
-        tile.m_tileObjects[14] = (GameObject)EditorGUILayout.ObjectField("Empty", tile.m_tileObjects[14], typeof(GameObject), false, null);
+        tile.Objects[0] = (GameObject)EditorGUILayout.ObjectField("Filled", tile.Objects[0], typeof(GameObject), false, null);
+        tile.Objects[1] = (GameObject)EditorGUILayout.ObjectField("Three Sides", tile.Objects[1], typeof(GameObject), false, null);
+        tile.Objects[2] = (GameObject)EditorGUILayout.ObjectField("Two Sides and One Corner", tile.Objects[2], typeof(GameObject), false, null);
+        tile.Objects[3] = (GameObject)EditorGUILayout.ObjectField("Two Adjacent Sides", tile.Objects[3], typeof(GameObject), false, null);
+        tile.Objects[4] = (GameObject)EditorGUILayout.ObjectField("Two Opposite Sides", tile.Objects[4], typeof(GameObject), false, null);
+        tile.Objects[5] = (GameObject)EditorGUILayout.ObjectField("One Side and Two Corners", tile.Objects[5], typeof(GameObject), false, null);
+        tile.Objects[6] = (GameObject)EditorGUILayout.ObjectField("One Side and One Lower Corner", tile.Objects[6], typeof(GameObject), false, null);
+        tile.Objects[7] = (GameObject)EditorGUILayout.ObjectField("One Side and One Upper Corner", tile.Objects[7], typeof(GameObject), false, null);
+        tile.Objects[8] = (GameObject)EditorGUILayout.ObjectField("One Side", tile.Objects[8], typeof(GameObject), false, null);
+        tile.Objects[9] = (GameObject)EditorGUILayout.ObjectField("Four Corners", tile.Objects[9], typeof(GameObject), false, null);
+        tile.Objects[10] = (GameObject)EditorGUILayout.ObjectField("Three Corners", tile.Objects[10], typeof(GameObject), false, null);
+        tile.Objects[11] = (GameObject)EditorGUILayout.ObjectField("Two Adjacent Corners", tile.Objects[11], typeof(GameObject), false, null);
+        tile.Objects[12] = (GameObject)EditorGUILayout.ObjectField("Two Opposite Corners", tile.Objects[12], typeof(GameObject), false, null);
+        tile.Objects[13] = (GameObject)EditorGUILayout.ObjectField("One Corner", tile.Objects[13], typeof(GameObject), false, null);
+        tile.Objects[14] = (GameObject)EditorGUILayout.ObjectField("Empty", tile.Objects[14], typeof(GameObject), false, null);
         if (EditorGUI.EndChangeCheck())
             EditorUtility.SetDirty(tile);
 

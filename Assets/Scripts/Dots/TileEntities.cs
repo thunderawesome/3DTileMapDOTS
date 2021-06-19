@@ -17,7 +17,7 @@ public class TileEntities : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        EntityManager entityManager = World.Active.EntityManager;
+        EntityManager entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
 
         EntityArchetype entityArchetype = entityManager.CreateArchetype(
             typeof(Translation),
