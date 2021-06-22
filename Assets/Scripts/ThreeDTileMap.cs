@@ -221,15 +221,16 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
                 var timeSeed = Time.time.GetHashCode();
                 //Seed our random
                 System.Random rand = new System.Random(seed2);
-                
-                var directionalTunnelTask = Task.Run(() => map = MapFunctions.DirectionalTunnel(timeSeed, mapResults[mapResults.Length - 1], m_minPathWidth, m_maxPathWidth, m_maxPathChange * Math.Abs(riverSeed), m_roughness, m_windyness, rand.Next(0, m_width-1)));
+
+                var directionalTunnelTask = Task.Run(() => map = MapFunctions.DirectionalTunnel(timeSeed, mapResults[mapResults.Length - 1], m_minPathWidth, m_maxPathWidth, m_maxPathChange * Math.Abs(riverSeed), m_roughness, m_windyness, rand.Next(0, m_width - 1)));
                 tasks.Add(directionalTunnelTask);
             }
         }
 
         var result = await Task.WhenAll(tasks);
 
-        var cellSize = m_tileMap.Objects[0].GetComponentInChildren<Renderer>().bounds.size;
+        var cellSize = m_tileMap.Objects[m_tileMap.Objects.Length - 1].GetComponentInChildren<MeshFilter>().sharedMesh.bounds.size;
+        //var cellSize = m_tileMap.Objects[0].GetComponentInChildren<Renderer>().bounds.size;
         map = result[result.Length - 1];
 
         for (int x = 0; x < map.GetUpperBound(0); x++)
