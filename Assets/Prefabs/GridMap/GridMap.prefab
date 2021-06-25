@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 423205050797068605}
+  - component: {fileID: 8213324121322752233}
   m_Layer: 0
   m_Name: GridMap
   m_TagString: Untagged
@@ -30,3 +31,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8213324121322752233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 423205050797068607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d5b7b8616882964d9418f4ac1b1c379, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_useDots: 0
+  m_tileMap: {fileID: 11400000, guid: 18d130eecdb694f47875601a6a612ede, type: 2}
+  m_mesh: {fileID: -2432090755550338912, guid: aa522498f003cdc4fa4f75515abf9121, type: 3}
+  m_material: {fileID: 2100000, guid: 44e483c9c092a3c46baea06ef02b7da3, type: 2}
+  m_width: 40
+  m_length: 35
+  m_flipXAxis: 1
+  m_flipZAxis: 0
+  m_edgesAreWalls: 0
+  m_smoothCount: 15
+  m_fillPercent: 50
+  m_minSectionWidth: 1
+  m_numberOfRivers: 2
+  m_minPathWidth: 1
+  m_maxPathWidth: 1
+  m_maxPathChange: 1
+  m_roughness: 0
+  m_windyness: 1
+  m_tileWaitTime: 0.25
+  m_randomWalkTopEnabled: 0
+  m_randomWalkTopSmoothedEnabled: 0
+  m_directionTunnelEnabled: 1
