@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
-using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Rendering;
 using Unity.Transforms;
@@ -14,6 +12,13 @@ using UnityEngine;
 public class ThreeDTileMap : MonoBehaviour, ITileGrid
 {
     #region Private Variables
+
+    [SerializeField]
+    [ReadOnly]
+    private int m_seed = -1;
+
+    [SerializeField]
+    private bool m_regenerateSeed = false;
 
     [SerializeField]
     private bool m_useDots = false;
@@ -49,17 +54,21 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
     private bool m_edgesAreWalls = false;
 
     [SerializeField]
+    [Range(0, 100)]
     private int m_smoothCount = 1;
 
     [SerializeField]
+    [Range(0, 100)]
     private int m_fillPercent = 75;
 
     [Header("Random Walk")]
     [SerializeField]
+    [Range(0, 5)]
     private int m_minSectionWidth = 4;
 
     [Header("Tunnel/River")]
     [SerializeField]
+    [Range(0, 5)]
     private int m_numberOfRivers = 1;
 
     [Range(0, 10)]
@@ -165,11 +174,13 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
         m_tiles = new Dictionary<Vector3Int, Tile>();
 
         var cellSize = m_tileMap.Objects[0].GetComponentInChildren<Renderer>().bounds.size;
-
-        var seed = UnityEngine.Random.Range(0, 99999);
-        var map = MapFunctions.GenerateCellularAutomata(m_width, m_length, seed, m_fillPercent, m_edgesAreWalls);
+        if (m_seed == -1 || m_regenerateSeed)
+        {
+            m_seed = UnityEngine.Random.Range(0, DateTime.UtcNow.GetHashCode());
+        }
+        var map = MapFunctions.GenerateCellularAutomata(m_width, m_length, m_seed, m_fillPercent, m_edgesAreWalls);
         map = MapFunctions.SmoothMooreCellularAutomata(map, m_edgesAreWalls, m_smoothCount);
-        map = RandomWalkTopAlgorithm(seed, map);
+        map = RandomWalkTopAlgorithm(m_seed, map);
         map = DirectionalTunnelAlgorithm(map);
 
         InitializeMapLayout(map);
@@ -189,22 +200,24 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
         m_tiles = new Dictionary<Vector3Int, Tile>();
 
         var tasks = new List<Task<int[,]>>();
-
-        var seed = UnityEngine.Random.Range(0, 99999);
+        if (m_seed == -1 || m_regenerateSeed)
+        {
+            m_seed = UnityEngine.Random.Range(0, DateTime.UtcNow.GetHashCode());
+        }
         int[,] map;
-        var cellularAutomataTask = Task.Run(() => map = ApplyCellularAutomata(seed));
+        var cellularAutomataTask = Task.Run(() => map = ApplyCellularAutomata(m_seed));
         tasks.Add(cellularAutomataTask);
 
         if (m_randomWalkTopEnabled == true)
         {
             var cellularAutomataResult = await cellularAutomataTask;
-            var randomWalkTopTask = Task.Run(() => map = MapFunctions.RandomWalkTop(cellularAutomataResult, seed));
+            var randomWalkTopTask = Task.Run(() => map = MapFunctions.RandomWalkTop(cellularAutomataResult, m_seed));
             tasks.Add(randomWalkTopTask);
 
             if (m_randomWalkTopSmoothedEnabled == true)
             {
                 var randomWalkTopResult = await randomWalkTopTask;
-                var randomWalkTopSmoothedTask = Task.Run(() => map = MapFunctions.RandomWalkTopSmoothed(randomWalkTopResult, seed, m_minSectionWidth));
+                var randomWalkTopSmoothedTask = Task.Run(() => map = MapFunctions.RandomWalkTopSmoothed(randomWalkTopResult, m_seed, m_minSectionWidth));
                 tasks.Add(randomWalkTopSmoothedTask);
             }
         }
@@ -216,13 +229,10 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
                 var mapResults = await Task.WhenAll(tasks);
                 var riverSeed = UnityEngine.Random.Range(0, 2) * 2 - 1;
 
-                var seed2 = UnityEngine.Random.Range(0, 99999);
-
-                var timeSeed = Time.time.GetHashCode();
                 //Seed our random
-                System.Random rand = new System.Random(seed2);
+                System.Random rand = new System.Random(m_seed);
 
-                var directionalTunnelTask = Task.Run(() => map = MapFunctions.DirectionalTunnel(timeSeed, mapResults[mapResults.Length - 1], m_minPathWidth, m_maxPathWidth, m_maxPathChange * Math.Abs(riverSeed), m_roughness, m_windyness, rand.Next(0, m_width - 1)));
+                var directionalTunnelTask = Task.Run(() => map = MapFunctions.DirectionalTunnel(m_seed, mapResults[mapResults.Length - 1], m_minPathWidth, m_maxPathWidth, m_maxPathChange * Mathf.Abs(riverSeed), m_roughness, m_windyness, rand.Next(0, m_width - 1)));
                 tasks.Add(directionalTunnelTask);
             }
         }
