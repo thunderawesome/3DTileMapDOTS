@@ -203,7 +203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_useDots: 0
-  m_tileMap: {fileID: 11400000, guid: 18d130eecdb694f47875601a6a612ede, type: 2}
+  m_tileMap: {fileID: 11400000, guid: 40fa7314e9550c148b499620688e52da, type: 2}
   m_mesh: {fileID: -2432090755550338912, guid: aa522498f003cdc4fa4f75515abf9121, type: 3}
   m_material: {fileID: 2100000, guid: 44e483c9c092a3c46baea06ef02b7da3, type: 2}
   m_width: 40
@@ -298,7 +298,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 1e-45, y: 0, z: 1.51e-43, w: 0.0703125}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0.00000008349474}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
