@@ -131,15 +131,15 @@ LightingSettings:
   m_PrefabAsset: {fileID: 0}
   m_Name: Settings.lighting
   serializedVersion: 3
-  m_GIWorkflowMode: 0
-  m_EnableBakedLightmaps: 1
+  m_GIWorkflowMode: 1
+  m_EnableBakedLightmaps: 0
   m_EnableRealtimeLightmaps: 1
   m_RealtimeEnvironmentLighting: 1
   m_BounceScale: 1
   m_AlbedoBoost: 1
   m_IndirectOutputScale: 1
   m_UsingShadowmask: 1
-  m_BakeBackend: 1
+  m_BakeBackend: 2
   m_LightmapMaxSize: 1024
   m_BakeResolution: 40
   m_Padding: 2
@@ -184,46 +184,6 @@ LightingSettings:
   m_PVRFilteringAtrousPositionSigmaDirect: 0.5
   m_PVRFilteringAtrousPositionSigmaIndirect: 2
   m_PVRFilteringAtrousPositionSigmaAO: 1
---- !u!1 &659079773 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 423205050797068607, guid: 1707d0f3b5ef6904097768758e3825a9,
-    type: 3}
-  m_PrefabInstance: {fileID: 423205050290373247}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &659079774
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 659079773}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d5b7b8616882964d9418f4ac1b1c379, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_useDots: 0
-  m_tileMap: {fileID: 11400000, guid: 40fa7314e9550c148b499620688e52da, type: 2}
-  m_mesh: {fileID: -2432090755550338912, guid: aa522498f003cdc4fa4f75515abf9121, type: 3}
-  m_material: {fileID: 2100000, guid: 44e483c9c092a3c46baea06ef02b7da3, type: 2}
-  m_width: 40
-  m_length: 35
-  m_flipXAxis: 1
-  m_flipZAxis: 0
-  m_edgesAreWalls: 0
-  m_smoothCount: 15
-  m_fillPercent: 50
-  m_minSectionWidth: 1
-  m_numberOfRivers: 2
-  m_minPathWidth: 1
-  m_maxPathWidth: 1
-  m_maxPathChange: 1
-  m_roughness: 0
-  m_windyness: 1
-  m_tileWaitTime: 0.25
-  m_randomWalkTopEnabled: 0
-  m_randomWalkTopSmoothedEnabled: 0
-  m_directionTunnelEnabled: 1
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -298,7 +258,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0.00000008349474}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0

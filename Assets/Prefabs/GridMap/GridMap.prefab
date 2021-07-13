@@ -43,20 +43,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d5b7b8616882964d9418f4ac1b1c379, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_seed: -1
-  m_regenerateSeed: 0
+  m_seed: 1466545176
+  m_regenerateSeed: 1
   m_useDots: 0
-  m_tileMap: {fileID: 11400000, guid: 18d130eecdb694f47875601a6a612ede, type: 2}
-  m_mesh: {fileID: -2432090755550338912, guid: aa522498f003cdc4fa4f75515abf9121, type: 3}
-  m_material: {fileID: 2100000, guid: 44e483c9c092a3c46baea06ef02b7da3, type: 2}
+  m_tileMap: {fileID: 11400000, guid: ab2f953e48105814988af3fbf0741c52, type: 2}
+  m_setCellSizeManually: 1
+  m_cellSize: {x: 16, y: 0, z: 16}
+  m_mesh: {fileID: -2432090755550338912, guid: 9e80acf486a672d4482b1e85c4a66223, type: 3}
+  m_material: {fileID: 2100000, guid: 30208b0436f5e3d42b51dae6e03e95a8, type: 2}
   m_width: 40
   m_length: 35
   m_flipXAxis: 1
   m_flipZAxis: 0
   m_edgesAreWalls: 0
   m_smoothCount: 50
-  m_fillPercent: 50
-  m_minSectionWidth: 5
+  m_fillPercent: 55
+  m_minSectionWidth: 1
   m_numberOfRivers: 2
   m_minPathWidth: 1
   m_maxPathWidth: 1

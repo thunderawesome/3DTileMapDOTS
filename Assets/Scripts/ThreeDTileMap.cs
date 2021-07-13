@@ -29,6 +29,13 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
 
     private GameObject m_mapHolder = null;
 
+    [Header("Cell Details")]
+    [SerializeField]
+    private bool m_setCellSizeManually = false;
+
+    [SerializeField]
+    private Vector3 m_cellSize = new Vector3(16f, 0, 16f);
+
     [SerializeField]
     private Mesh m_mesh = null;
 
@@ -239,7 +246,7 @@ public class ThreeDTileMap : MonoBehaviour, ITileGrid
 
         var result = await Task.WhenAll(tasks);
 
-        var cellSize = m_tileMap.Objects[m_tileMap.Objects.Length - 1].GetComponentInChildren<MeshFilter>().sharedMesh.bounds.size;
+        var cellSize = m_setCellSizeManually == false ? m_tileMap.Objects[m_tileMap.Objects.Length - 1].GetComponentInChildren<MeshFilter>().sharedMesh.bounds.size : m_cellSize;
         //var cellSize = m_tileMap.Objects[0].GetComponentInChildren<Renderer>().bounds.size;
         map = result[result.Length - 1];
 

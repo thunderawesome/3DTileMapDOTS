@@ -10,8 +10,7 @@ Material:
   m_Name: Windwaker
   m_Shader: {fileID: -6465566751694194690, guid: a9aea49e19495174f80f910ddb189a37,
     type: 3}
-  m_ShaderKeywords: FOAM_SHADOWS_ON INTERSECTION_EFFECTS_ON SURFACE_FOAM_ON WATER_LIGHTING_ON
-    WORLD_SPACE_UV_ON
+  m_ShaderKeywords: FOAM_SHADOWS_ON SURFACE_FOAM_ON WATER_LIGHTING_ON WORLD_SPACE_UV_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -53,7 +52,7 @@ Material:
     - _RefractionStrength: 0.017
     - _ShoreBlend: 1
     - _ShoreDepth: 3
-    - _ShoreFade: 0
+    - _ShoreFade: 0.5
     - _SurfaceFoamBlend: 1
     - _WaterColorDepth: 2.59
     - _WaterColorHorizonDistance: 20
@@ -62,11 +61,11 @@ Material:
     - _IntersectionFoamMovement: {r: 0, g: 0, b: 0, a: 0}
     - _IntersectionFoamSampling: {r: 1, g: 0, b: 0, a: 0}
     - _NormalsMovement: {r: 0.04, g: 0.36, b: 0, a: 0}
-    - _ShoreColor: {r: 1, g: 1, b: 1, a: 0}
+    - _ShoreColor: {r: 1, g: 1, b: 1, a: 1}
     - _SurfaceFoamColor1: {r: 1, g: 1, b: 1, a: 0.3215686}
     - _SurfaceFoamColor2: {r: 1, g: 1, b: 1, a: 0.7294118}
     - _SurfaceFoamMovement: {r: 0.7, g: 0, b: 0.47, a: 0.01}
-    - _SurfaceFoamSampling: {r: 0.62, g: 0, b: 0, a: 0}
+    - _SurfaceFoamSampling: {r: 0.62, g: 1, b: 0, a: 0}
     - _SurfaceFoamTilingAndOffset: {r: -1, g: -1, b: 2, a: 2}
     - _WaterColorDeep: {r: 0, g: 0.42745095, b: 0.6784314, a: 1}
     - _WaterColorHorizon: {r: 0, g: 0.22745094, b: 0.8, a: 1}
