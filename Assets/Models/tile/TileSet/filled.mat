@@ -41,6 +41,18 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -51,6 +63,18 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 228511336c7c4b349afa11b9bd0c0e35, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ShadedBaseMap:
@@ -80,10 +104,14 @@ Material:
     - _Anisotropy: 0
     - _Blend: 0
     - _BumpScale: 1
+    - _ClearCoatMask: 0
+    - _ClearCoatSmoothness: 0
     - _ColorizedShadowsAddA: 1
     - _ColorizedShadowsMainA: 1
     - _Cull: 2
     - _Cutoff: 0.5
+    - _DetailAlbedoMapScale: 1
+    - _DetailNormalMapScale: 1
     - _DiffuseFallOff: 0.01
     - _DiffuseStep: 0
     - _DstBlend: 0
@@ -92,18 +120,27 @@ Material:
     - _EnableSpecular: 1
     - _EnableToonRim: 0
     - _EnergyConservation: 1
+    - _EnvironmentReflections: 1
+    - _GlossMapScale: 0
+    - _Glossiness: 0
     - _GlossinessSource: 0
+    - _GlossyReflections: 0
     - _LightColorContribution: 1
+    - _Metallic: 0
     - _Occlusion: 1
+    - _OcclusionStrength: 1
+    - _Parallax: 0.005
     - _QueueOffset: 0
     - _RampSmoothSampling: 0
     - _ReceiveShadows: 1
+    - _SampleGI: 0
     - _ShadowBiasAdditional: 0
     - _ShadowBiasDirectional: 0
     - _ShadowFallOff: 0.5
     - _Shininess: 0
     - _Smoothness: 0.5
     - _SmoothnessSource: 0
+    - _SmoothnessTextureChannel: 0
     - _SpecSource: 0
     - _SpecularFallOff: 0.01
     - _SpecularHighlights: 1
@@ -114,6 +151,7 @@ Material:
     - _ToonRimAttenuation: 0
     - _ToonRimFallOff: 1
     - _ToonRimPower: 0.5
+    - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 0}
