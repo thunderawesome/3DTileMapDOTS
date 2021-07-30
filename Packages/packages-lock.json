@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.elringus.grassbending": {
+      "version": "https://github.com/Elringus/GrassBending.git#package",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "41067f1d17e9185e060c0c883fa002aa4cdd75ef"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,

@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 7293252a4c6c84648b5a3f2c77658e26
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - grassMaterial: {fileID: 2100000, guid: 1e5231b1dc36f004a9042353752599b5, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
