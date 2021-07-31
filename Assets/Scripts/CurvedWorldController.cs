@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[ExecuteInEditMode]
 public class CurvedWorldController : MonoBehaviour
 {
     [SerializeField] private Material[] curvedSurfaceMats;
@@ -8,8 +7,8 @@ public class CurvedWorldController : MonoBehaviour
     {
         for (int i = 0; i < curvedSurfaceMats.Length; i++)
         {
-            curvedSurfaceMats[i].SetFloat("_BendFallOff", 17.0f);
-            curvedSurfaceMats[i].SetFloat("_BendFallOffStr", 2.0f);
+            curvedSurfaceMats[i].SetFloat("_BendFallOff", 300f);
+            curvedSurfaceMats[i].SetFloat("_BendFallOffStr", 2.25f);
         }
        
     }

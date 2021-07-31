@@ -43,6 +43,8 @@ Shader "Roystan/Toon"
 			//#pragma multi_compile_fwdbase
 			#pragma multi_compile _ _MAIN_LIGHT_SHADOWS
             #pragma multi_compile _ _MAIN_LIGHT_SHADOWS_CASCADE
+			 // make fog work
+            #pragma multi_compile_fog
 			
 			#include "UnityCG.cginc"
 			// Files below include macros and functions to assist
@@ -62,6 +64,7 @@ Shader "Roystan/Toon"
 				float4 pos : SV_POSITION;
 				float3 worldNormal : NORMAL;
 				float2 uv : TEXCOORD0;
+				UNITY_FOG_COORDS(1)
 				float3 viewDir : TEXCOORD1;	
 				// Macro found in Autolight.cginc. Declares a vector4
 				// into the TEXCOORD2 semantic with varying precision 
@@ -95,6 +98,7 @@ Shader "Roystan/Toon"
 				o.worldNormal = UnityObjectToWorldNormal(v.normal);		
 				o.viewDir = WorldSpaceViewDir(v.vertex);
 				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+				UNITY_TRANSFER_FOG(o,o.vertex);
 				// Defined in Autolight.cginc. Assigns the above shadow coordinate
 				// by transforming the vertex from world space to shadow-map space.
 				TRANSFER_SHADOW(o)
@@ -139,10 +143,9 @@ Shader "Roystan/Toon"
 				float3 halfVector = normalize(_WorldSpaceLightPos0 + viewDir);
 				float NdotH = dot(normal, halfVector);
 
-				float specularExponent = exp2(_Glossiness * _Glossiness * 22) + 2;
-
 				// Multiply _Glossiness by itself to allow artist to use smaller
 				// glossiness values in the inspector.
+				float specularExponent = exp2(_Glossiness * _Glossiness * 22) + 2;				
 				float specularIntensity = pow(NdotH * lightIntensity, specularExponent);
 				float specularIntensitySmooth = smoothstep(0.005, 0.01, specularIntensity);
 				float4 specular = specularIntensitySmooth * _SpecularColor;				
@@ -156,14 +159,16 @@ Shader "Roystan/Toon"
 				float4 rim = rimIntensity * _RimColor;
 
 				float4 sample = tex2D(_MainTex, i.uv);
-
-				return (light + _AmbientColor + specular + rim) * _Color * sample;
+				
+				float4 result = (light + _AmbientColor + specular + rim) * _Color * sample;
+				UNITY_APPLY_FOG(i.fogCoord, result);
+				return result;
 			}
 			ENDCG
 		}
 
 		// Shadow casting support.
-      //  UsePass "Legacy Shaders/VertexLit/SHADOWCASTER"
+        UsePass "Legacy Shaders/VertexLit/SHADOWCASTER"
 		
 	}
 	FallBack "Universal Render Pipeline/Simple Lit"
