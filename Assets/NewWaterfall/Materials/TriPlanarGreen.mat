@@ -1,0 +1,138 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: TriPlanarGreen
+  m_Shader: {fileID: 4800000, guid: 5a2f43d24059218469f847b0b77a1141, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_2934214C:
+        m_Texture: {fileID: 2800000, guid: ae8ba95093edc254dab87ba4f2cd4068, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_599E2C21:
+        m_Texture: {fileID: 2800000, guid: ae8ba95093edc254dab87ba4f2cd4068, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_B50B19B:
+        m_Texture: {fileID: 2800000, guid: f8e81a3345f76214f9de6e29ef4d05a4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: f8e81a3345f76214f9de6e29ef4d05a4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTexBottom:
+        m_Texture: {fileID: 2800000, guid: 4f03895cd8a1c904caf98fcbe88cbe12, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTexSide:
+        m_Texture: {fileID: 2800000, guid: ae8ba95093edc254dab87ba4f2cd4068, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Mask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Noise:
+        m_Texture: {fileID: 2800000, guid: 2c454852d9347a24494289ee3c64e610, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Normal:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalT:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Ramp:
+        m_Texture: {fileID: 2800000, guid: 09fd6ac256831d64d9dcc3cc4b1f6783, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _BumpScale: 1
+    - _Cutoff: 0.5
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _Edge: -0.02
+    - _Edge2: 0.26
+    - _Edge3: 1.42
+    - _Edge4: 2
+    - _EdgeWidth: 0
+    - _GlossMapScale: 1
+    - _Glossiness: 0.5
+    - _GlossyReflections: 1
+    - _Merge: 0
+    - _MergeW: 0.34
+    - _MergeWidth: 0.21
+    - _MergeY: -0.61
+    - _Metallic: 0
+    - _Mode: 0
+    - _NoiseScale: 0.62
+    - _OcclusionStrength: 1
+    - _Parallax: 0.02
+    - _RimPower: 2.9
+    - _Scale: 0.55
+    - _SideScale: 0.31
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _SrcBlend: 1
+    - _TopSpread: 0.99
+    - _UVSec: 0
+    - _ZWrite: 1
+    m_Colors:
+    - _Color: {r: 0.5188679, g: 0.7969249, b: 1, a: 1}
+    - _Color2: {r: 0.73671407, g: 1, b: 0.13235295, a: 1}
+    - _EdgeColor: {r: 0.21774122, g: 0, b: 0.3301887, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _MaskColor: {r: 0.79411757, g: 0.74264705, b: 1, a: 1}
+    - _RimColor: {r: 0.3842478, g: 0, b: 0.38679248, a: 0.709}
+    - _RimColor2: {r: 0.08823532, g: 0.0012975795, b: 0.0012975795, a: 1}
+    - _TopColor: {r: 0.75, g: 0, b: 0, a: 1}
+  m_BuildTextureStacks: []

@@ -43,7 +43,7 @@ Shader "Roystan/Toon"
 			//#pragma multi_compile_fwdbase
 			#pragma multi_compile _ _MAIN_LIGHT_SHADOWS
             #pragma multi_compile _ _MAIN_LIGHT_SHADOWS_CASCADE
-			 // make fog work
+			// make fog work
             #pragma multi_compile_fog
 			
 			#include "UnityCG.cginc"
@@ -62,7 +62,7 @@ Shader "Roystan/Toon"
 			struct v2f
 			{
 				float4 pos : SV_POSITION;
-				float3 worldNormal : NORMAL;
+				float3 normal : NORMAL;
 				float2 uv : TEXCOORD0;
 				UNITY_FOG_COORDS(1)
 				float3 viewDir : TEXCOORD1;	
@@ -95,7 +95,7 @@ Shader "Roystan/Toon"
 			{
 				v2f o;
 				o.pos = UnityObjectToClipPos(curveIt(v.vertex));
-				o.worldNormal = UnityObjectToWorldNormal(v.normal);		
+				o.normal = UnityObjectToWorldNormal(v.normal);
 				o.viewDir = WorldSpaceViewDir(v.vertex);
 				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
 				UNITY_TRANSFER_FOG(o,o.vertex);
@@ -118,7 +118,7 @@ Shader "Roystan/Toon"
 
 			float4 frag (v2f i) : SV_Target
 			{
-				float3 normal = normalize(i.worldNormal);
+				float3 normal = normalize(i.normal);
 				float3 viewDir = normalize(i.viewDir);
 
 				// Lighting below is calculated using Blinn-Phong,
