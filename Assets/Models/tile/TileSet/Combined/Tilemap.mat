@@ -81,7 +81,7 @@ Material:
     - Rim_Power: 5
     - Toon_Ramp_Offset: 0.5
     - Toon_Ramp_Smoothness: 0
-    - _EnableTriplanar: 1
+    - _EnableTriplanar: 0
     m_Colors:
     - Toon_Ramp_Tint: {r: 0.490566, g: 0.490566, b: 0.490566, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}

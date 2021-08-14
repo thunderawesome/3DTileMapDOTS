@@ -10,8 +10,8 @@ Material:
   m_Name: Beach
   m_Shader: {fileID: -6465566751694194690, guid: b85c5e2c0d0c9774ab24e77078fc44cb,
     type: 3}
-  m_ShaderKeywords: FOAM_SHADOWS_ON INTERSECTION_EFFECTS_ON SHORE_MOVEMENT_ON WATER_LIGHTING_ON
-    WORLD_SPACE_UV_ON
+  m_ShaderKeywords: ENABLE_BENDING_PLANET FOAM_SHADOWS_ON INTERSECTION_EFFECTS_ON
+    SHORE_MOVEMENT_ON WATER_LIGHTING_ON WORLD_SPACE_UV_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -153,7 +153,7 @@ Material:
     - _LightingDiffuseColor: {r: 0, g: 0, b: 0, a: 0}
     - _LightingSpecularColor: {r: 1, g: 1, b: 1, a: 0}
     - _NormalsMovement: {r: 0.04, g: 2, b: 0, a: 0}
-    - _ShoreColor: {r: 1, g: 1, b: 1, a: 1}
+    - _ShoreColor: {r: 1, g: 1, b: 1, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _SurfaceFoamColor1: {r: 1, g: 1, b: 1, a: 0.3215686}
     - _SurfaceFoamColor2: {r: 1, g: 1, b: 1, a: 0.7294118}

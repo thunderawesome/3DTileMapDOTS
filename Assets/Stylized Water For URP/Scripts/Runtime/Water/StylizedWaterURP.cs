@@ -49,6 +49,11 @@ namespace StylizedWater
         [Range(0f, 10f)] public float causticsDepth;
         #endregion
 
+        #region World Bending
+        public bool enableBending;
+        public bool enableAllAxisBending;
+        #endregion
+
         #region Colors and Transparency
         public bool useColorGradient;
         [GradientUsage(true)] public Gradient colorGradient;
@@ -241,6 +246,11 @@ namespace StylizedWater
             refractionStrength = material.GetFloat("_RefractionStrength");
             #endregion
 
+            #region World Bending
+            enableBending = Shader.IsKeywordEnabled("ENABLE_BENDING") ? true : false;
+            enableAllAxisBending = Shader.IsKeywordEnabled("ENABLE_BENDING_PLANET") ? true : false;
+            #endregion
+
             normalsMovement = material.GetVector("_NormalsMovement");
             normalsSpeed = normalsMovement.x;
             normalsScale = normalsMovement.y;
@@ -295,7 +305,7 @@ namespace StylizedWater
                 #region Colors and Transparency
                 useColorGradient = (material.IsKeywordEnabled("COLOR_GRADIENT_ON")) ? true : false;
                 colorGradientTexture = (Texture2D)material.GetTexture("_WaterColorGradientTexture");
-                #endregion
+                #endregion               
 
                 #region Caustics [LEGACY]
                 causticsStrength = material.GetFloat("_CausticsStrength");
@@ -386,6 +396,15 @@ namespace StylizedWater
                 meshRenderer.hideFlags = (hideComponents) ? HideFlags.HideInInspector : HideFlags.None;
                 meshFilter.hideFlags = (hideComponents) ? HideFlags.HideInInspector : HideFlags.None;
             }
+
+            #region World Bending
+
+            if (enableBending) material.EnableKeyword("ENABLE_BENDING");
+            else material.DisableKeyword("ENABLE_BENDING");
+
+            if (enableAllAxisBending) material.EnableKeyword("ENABLE_BENDING_PLANET");
+            else material.DisableKeyword("ENABLE_BENDING_PLANET");
+            #endregion
 
             #region Colors and Transparency
             if (useColorGradient) material.EnableKeyword("COLOR_GRADIENT_ON");

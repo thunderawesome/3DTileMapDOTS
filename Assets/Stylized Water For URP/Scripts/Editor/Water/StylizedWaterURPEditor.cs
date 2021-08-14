@@ -21,6 +21,8 @@ namespace StylizedWater
         new SerializedObject serializedObject;
         GameObject selected;
 
+        public bool useBending;
+        public bool useAllAxisBending;
         public bool lightingDisabled;
         public bool shoreMovementEnabled;
         public bool usesReflections;
@@ -107,7 +109,7 @@ namespace StylizedWater
         #endregion
 
         #region Additional Settings
-        SerializedProperty hideComponents, waterUVs;
+        SerializedProperty hideComponents, waterUVs, enableBending, enableAllAxisBending;
         #endregion
 
         #region Section Foldouts
@@ -297,7 +299,7 @@ namespace StylizedWater
             EditorGUILayout.Space();
 
             EditorGUILayout.LabelField("Depth", EditorStyles.helpBox);
-            if(stylizedWater.meshRenderer.sharedMaterial.shader.name != mobileShaderName) EditorGUILayout.PropertyField(useColorGradient, EditorGUIUtility.TrTextContent("Use Gradient"));
+            if (stylizedWater.meshRenderer.sharedMaterial.shader.name != mobileShaderName) EditorGUILayout.PropertyField(useColorGradient, EditorGUIUtility.TrTextContent("Use Gradient"));
 
             if (!usesColorGradient)
             {
@@ -607,6 +609,8 @@ namespace StylizedWater
             EditorGUILayout.Space();
             CoreEditorUtils.DrawPopup(EditorGUIUtility.TrTextContent("UV Space"), waterUVs, new string[] { "Local", "World" });
             EditorGUILayout.PropertyField(hideComponents, EditorGUIUtility.TrTextContent("Hide Components"));
+            EditorGUILayout.PropertyField(enableBending, EditorGUIUtility.TrTextContent("Enable Bending"));
+            EditorGUILayout.PropertyField(enableAllAxisBending, EditorGUIUtility.TrTextContent("Enable All Axis Bend"));
             EditorGUILayout.Space(); EditorGUILayout.Space();
         }
 
@@ -745,6 +749,8 @@ namespace StylizedWater
             enableFoamShadows = serializedObject.FindProperty("enableFoamShadows");
             enableRefraction = serializedObject.FindProperty("enableRefraction");
             waterUVs = serializedObject.FindProperty("waterUVs");
+            enableBending = serializedObject.FindProperty("enableBending");
+            enableAllAxisBending = serializedObject.FindProperty("enableAllAxisBending");
             #endregion
 
             #region Waves
@@ -764,6 +770,8 @@ namespace StylizedWater
             foamShadowsEnabled = enableFoamShadows.boolValue;
             refractionEnabled = enableRefraction.boolValue;
             intersectionEffectsEnabled = enableIntersectionEffects.boolValue;
+            useBending = enableBending.boolValue;
+            useAllAxisBending = enableAllAxisBending.boolValue;
         }
     }
 }

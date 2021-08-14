@@ -89,6 +89,9 @@
         },
         {
             "m_Id": "48304f0b3b0715808ed8c8de1c14f422"
+        },
+        {
+            "m_Id": "3fdc8ed8886a44378cfe4c65b1eaf8d4"
         }
     ],
     "m_Keywords": [
@@ -309,6 +312,12 @@
         },
         {
             "m_Id": "da634cc90cb342bea3f12e67931bbec4"
+        },
+        {
+            "m_Id": "164900ff48374e2eb47bb31fc12f6b70"
+        },
+        {
+            "m_Id": "0f005e5b42c3445f931656e6d63684c5"
         }
     ],
     "m_GroupDatas": [
@@ -344,9 +353,6 @@
         },
         {
             "m_Id": "2b89a65e59af423ebdb090e12b32d422"
-        },
-        {
-            "m_Id": "be7c462ae86d43adb697e882ebe0393c"
         }
     ],
     "m_StickyNoteDatas": [
@@ -400,6 +406,20 @@
         {
             "m_OutputSlot": {
                 "m_Node": {
+                    "m_Id": "0f005e5b42c3445f931656e6d63684c5"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "164900ff48374e2eb47bb31fc12f6b70"
+                },
+                "m_SlotId": 1723688220
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
                     "m_Id": "112846f6fd4caf84bdd3c74c1dbc1643"
                 },
                 "m_SlotId": 0
@@ -423,6 +443,20 @@
                     "m_Id": "900d6ddc870dec8a92de39ad34348df5"
                 },
                 "m_SlotId": 2
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "164900ff48374e2eb47bb31fc12f6b70"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "bd4647317fd14e62b0b15ece9e67c855"
+                },
+                "m_SlotId": 0
             }
         },
         {
@@ -1822,6 +1856,41 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "0f005e5b42c3445f931656e6d63684c5",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": -1533.0419921875,
+            "y": 79.08551025390625,
+            "width": 0.0,
+            "height": 0.0
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "848c995ae2a742e2a26fb6e04a0a37a5"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "3fdc8ed8886a44378cfe4c65b1eaf8d4"
+    }
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
     "m_ObjectId": "1001fe833e7e5682885858e194ba146e",
     "m_Id": 1,
@@ -2038,6 +2107,48 @@
         "z": 0.0,
         "w": 0.0
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.SubGraphNode",
+    "m_ObjectId": "164900ff48374e2eb47bb31fc12f6b70",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Bending SubGraph",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": -1350.0,
+            "y": 100.0,
+            "width": 259.0,
+            "height": 278.0
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "9538dd82ff1a4dffbe8a83561301a566"
+        },
+        {
+            "m_Id": "f2c5489807044a01ac1533e87062a04c"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_SerializedSubGraph": "{\n    \"subGraph\": {\n        \"fileID\": -5475051401550479605,\n        \"guid\": \"6250f09816ea2494882c12a8981666b0\",\n        \"type\": 3\n    }\n}",
+    "m_PropertyGuids": [
+        "c91120a2-d4ac-45bb-8e3f-7bc92ebf9f05"
+    ],
+    "m_PropertyIds": [
+        1723688220
+    ]
 }
 
 {
@@ -3030,6 +3141,29 @@
         "y": 0.0,
         "z": 0.0,
         "w": 0.0
+    }
+}
+
+{
+    "m_SGVersion": 1,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
+    "m_ObjectId": "3fdc8ed8886a44378cfe4c65b1eaf8d4",
+    "m_Guid": {
+        "m_GuidSerialized": "3cfad9c0-8463-40a0-bf9e-dfd2073a726c"
+    },
+    "m_Name": "BendingAmount",
+    "m_DefaultReferenceName": "",
+    "m_OverrideReferenceName": "_BendingAmount",
+    "m_GeneratePropertyBlock": false,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": true,
+    "hlslDeclarationOverride": 1,
+    "m_Hidden": false,
+    "m_Value": 0.0,
+    "m_FloatType": 0,
+    "m_RangeValues": {
+        "x": 0.0,
+        "y": 1.0
     }
 }
 
@@ -5281,6 +5415,21 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "848c995ae2a742e2a26fb6e04a0a37a5",
+    "m_Id": 0,
+    "m_DisplayName": "BendingAmount",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
     "m_ObjectId": "8519c47d2b7a7f8a9f23facfc015e582",
     "m_Id": 0,
@@ -5718,6 +5867,21 @@
     "m_Property": {
         "m_Id": "c24e33f03830b789b06d7f7a6b7f835e"
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "9538dd82ff1a4dffbe8a83561301a566",
+    "m_Id": 1723688220,
+    "m_DisplayName": "_BendingAmount",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Vector1_E004ED58",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
 }
 
 {
@@ -7019,17 +7183,6 @@
     "m_Labels": [
         "X"
     ]
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.GroupData",
-    "m_ObjectId": "be7c462ae86d43adb697e882ebe0393c",
-    "m_Title": "World",
-    "m_Position": {
-        "x": -3630.999755859375,
-        "y": -778.9999389648438
-    }
 }
 
 {
@@ -8371,6 +8524,29 @@
     "m_Labels": [
         "X"
     ]
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector3MaterialSlot",
+    "m_ObjectId": "f2c5489807044a01ac1533e87062a04c",
+    "m_Id": 0,
+    "m_DisplayName": "Bent Position",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "BentPosition",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "m_Labels": []
 }
 
 {
