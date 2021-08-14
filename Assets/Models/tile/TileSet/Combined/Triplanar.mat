@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Triplanar
-  m_Shader: {fileID: 4800000, guid: 7184f69b8276a484eac7fb44295212c2, type: 3}
+  m_Shader: {fileID: 4800000, guid: 5a2f43d24059218469f847b0b77a1141, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0

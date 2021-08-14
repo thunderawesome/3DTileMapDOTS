@@ -46,6 +46,8 @@ Material:
     - REFRACTION: 0
     - SURFACE_FOAM: 1
     - WORLD_SPACE_UV: 1
+    - _BendFallOff: 300
+    - _BendFallOffStr: 2.25
     - _IntersectionFoamBlend: 1
     - _IntersectionFoamDepth: 0.72
     - _IntersectionFoamScale: 0.19
@@ -58,11 +60,13 @@ Material:
     - _WaterColorDepth: 2.59
     - _WaterColorHorizonDistance: 20
     m_Colors:
+    - _BendAmount: {r: -0.0005, g: 0.0025, b: 0.0005, a: 0}
+    - _BendOrigin: {r: 77.9, g: 364, b: -105.3, a: 0}
     - _IntersectionFoamColor: {r: 1, g: 1, b: 1, a: 1}
     - _IntersectionFoamMovement: {r: 0, g: 0, b: 0, a: 0}
     - _IntersectionFoamSampling: {r: 1, g: 0, b: 0, a: 0}
     - _NormalsMovement: {r: 0.04, g: 0.36, b: 0, a: 0}
-    - _ShoreColor: {r: 1, g: 1, b: 1, a: 1}
+    - _ShoreColor: {r: 1, g: 1, b: 1, a: 0}
     - _SurfaceFoamColor1: {r: 1, g: 1, b: 1, a: 0.3215686}
     - _SurfaceFoamColor2: {r: 1, g: 1, b: 1, a: 0.7294118}
     - _SurfaceFoamMovement: {r: 0.7, g: 0, b: 0.47, a: 0.01}
