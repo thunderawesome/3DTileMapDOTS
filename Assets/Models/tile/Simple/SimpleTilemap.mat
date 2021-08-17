@@ -84,6 +84,18 @@ Material:
         m_Texture: {fileID: 2800000, guid: f8e81a3345f76214f9de6e29ef4d05a4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_297010fdc9304854a84d0396bf2d6979_Texture_1:
+        m_Texture: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_d4961420f1b94b238e0e65ab09639cde_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 5293ac8cd3dd6f6478585f4f30abddf7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_fbd37b6922ed474fb51ebb8174ad3d92_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 5293ac8cd3dd6f6478585f4f30abddf7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -93,7 +105,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TopPrimary:
-        m_Texture: {fileID: 2800000, guid: 2c454852d9347a24494289ee3c64e610, type: 3}
+        m_Texture: {fileID: 2800000, guid: f8e81a3345f76214f9de6e29ef4d05a4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TopSecondary:
@@ -141,13 +153,14 @@ Material:
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
+    - _SampleGI: 0
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
-    - _TopNoiseScaleFactor: 20.34
-    - _TopTextureBlending: -1
+    - _TopNoiseScaleFactor: 35
+    - _TopTextureBlending: 0.1
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
