@@ -10,8 +10,8 @@ Material:
   m_Name: Curved
   m_Shader: {fileID: -6465566751694194690, guid: a9aea49e19495174f80f910ddb189a37,
     type: 3}
-  m_ShaderKeywords: ENABLE_BENDING ENABLE_BENDING_PLANET FOAM_SHADOWS_ON SURFACE_FOAM_ON
-    WATER_LIGHTING_ON WORLD_SPACE_UV_ON
+  m_ShaderKeywords: ENABLE_BENDING_PLANET FOAM_SHADOWS_ON SURFACE_FOAM_ON WATER_LIGHTING_ON
+    WORLD_SPACE_UV_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
