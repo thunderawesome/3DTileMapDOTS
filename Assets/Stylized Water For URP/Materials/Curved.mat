@@ -10,8 +10,8 @@ Material:
   m_Name: Curved
   m_Shader: {fileID: -6465566751694194690, guid: a9aea49e19495174f80f910ddb189a37,
     type: 3}
-  m_ShaderKeywords: ENABLE_BENDING ENABLE_BENDING_PLANET FOAM_SHADOWS_ON SURFACE_FOAM_ON
-    WATER_LIGHTING_ON WORLD_SPACE_UV_ON
+  m_ShaderKeywords: ENABLE_BENDING_PLANET FOAM_SHADOWS_ON SURFACE_FOAM_ON WATER_LIGHTING_ON
+    WORLD_SPACE_UV_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -80,7 +80,7 @@ Material:
     m_Floats:
     - Brightness_Rim: 2
     - FOAM_SHADOWS: 1
-    - INTERSECTION_EFFECTS: 0
+    - INTERSECTION_EFFECTS: 1
     - REFRACTION: 1
     - Rim_Power: 5
     - SHORE_MOVEMENT: 0
@@ -90,8 +90,8 @@ Material:
     - WATER_LIGHTING: 1
     - WORLD_SPACE_UV: 1
     - _BendAmount: 0.00025
-    - _BendFallOff: 300
-    - _BendFallOffStr: 2.25
+    - _BendFallOff: 50
+    - _BendFallOffStr: 3.5
     - _BendingAmount: 0
     - _CausticsDepth: 0.6
     - _CausticsScale: 2.41
@@ -131,8 +131,8 @@ Material:
     m_Colors:
     - Toon_Ramp_Tint: {r: 0.490566, g: 0.490566, b: 0.490566, a: 1}
     - Vector2_6A93A1CF: {r: 1, g: 1, b: 0, a: 0}
-    - _BendAmount: {r: -0.0005, g: 0.0025, b: 0.0005, a: 0}
-    - _BendOrigin: {r: 77.9, g: 364, b: -105.3, a: 0}
+    - _BendAmount: {r: 0, g: -0.000025, b: 0, a: 0}
+    - _BendOrigin: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _IntersectionFoamColor: {r: 1, g: 1, b: 1, a: 1}
     - _IntersectionFoamMovement: {r: 0, g: 0, b: 0, a: 0}

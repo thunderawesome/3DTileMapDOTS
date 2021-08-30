@@ -88,8 +88,8 @@ Material:
     - _AlphaClip: 0
     - _Anisotropic: 0
     - _Anisotropy: 0
-    - _BendFallOff: 300
-    - _BendFallOffStr: 2.25
+    - _BendFallOff: 50
+    - _BendFallOffStr: 3.5
     - _Blend: 0
     - _BumpScale: 1
     - _ClearCoatMask: 0
@@ -147,8 +147,8 @@ Material:
     m_Colors:
     - _AmbientColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 0}
-    - _BendAmount: {r: -0.0005, g: -0.0025, b: 0.0005, a: 1}
-    - _BendOrigin: {r: 77.9, g: 364, b: -105.3, a: 0}
+    - _BendAmount: {r: 0, g: -0.000025, b: 0, a: 0}
+    - _BendOrigin: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}

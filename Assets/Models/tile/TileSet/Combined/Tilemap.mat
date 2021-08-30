@@ -52,6 +52,14 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _TopPrimary:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TopSecondary:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Triplanar_600aee41dd174c4599ac7beb97e7e1e8_Texture2D24b46185ff90463abea2993b9a20db21_3937609062:
         m_Texture: {fileID: 2800000, guid: 2c454852d9347a24494289ee3c64e610, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -81,8 +89,18 @@ Material:
     - Rim_Power: 5
     - Toon_Ramp_Offset: 0.5
     - Toon_Ramp_Smoothness: 0
+    - _BendFallOff: 50
+    - _BendFallOffStr: 3.5
     - _EnableTriplanar: 0
+    - _TopNoiseScaleFactor: 0
+    - _TopTextureBlending: 0
     m_Colors:
     - Toon_Ramp_Tint: {r: 0.490566, g: 0.490566, b: 0.490566, a: 1}
+    - _BendAmount: {r: 0, g: -0.000025, b: 0, a: 0}
+    - _BendOrigin: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _SideOffset: {r: 0, g: 0, b: 0, a: 0}
+    - _SideTiling: {r: 0, g: 0, b: 0, a: 0}
+    - _TopOffset: {r: 0, g: 0, b: 0, a: 0}
+    - _TopTiling: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
